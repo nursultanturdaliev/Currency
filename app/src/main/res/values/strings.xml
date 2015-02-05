@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Currency</string>
+    <string name="action_settings">Settings</string>
+
+    <string-array name="currency_titles">
+        <item>USD</item>
+        <item>EUR</item>
+        <item>RUB</item>
+        <item>KZT</item>
+    </string-array>
+    <string name="title">НБКР</string>
+    <string name="buy">Buy</string>
+    <string name="sell">Sell</string>
+
+</resources>
