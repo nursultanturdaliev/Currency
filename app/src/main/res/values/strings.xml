@@ -15,5 +15,7 @@
     <string name="buy">Buy</string>
     <string name="sell">Sell</string>
     <string name="title_activity_about">About</string>
+    <string name="action_update">update</string>
+    <string name="update">Update</string>
 
 </resources>

@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 
+import parser.Currency;
 import parser.CurrencyParser;
 
 /**
@@ -39,8 +40,7 @@ public class CurrencyFragment extends ListFragment {
             currencyType = getArguments().getString(ARG_CURRENCY_TYPE);
         }
         CurrencyParser currencyParser = new CurrencyParser(this, currencyType);
-        String[] urls = new String[]{"http://ecoislamicbank.kg/", "http://www.nbkr.kg/XML/daily.xml"};
-        currencyParser.execute(urls);
+        currencyParser.execute(Currency.bankUrls);
     }
 
 

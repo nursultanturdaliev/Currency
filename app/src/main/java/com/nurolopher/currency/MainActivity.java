@@ -3,6 +3,7 @@ package com.nurolopher.currency;
 
 import android.app.ActionBar;
 import android.app.FragmentTransaction;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
@@ -36,11 +37,19 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
         tabs = getResources().getStringArray(R.array.currency_titles);
 
         viewPager.setAdapter(tabsPagerAdapter);
+        viewPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
+            @Override
+            public void onPageSelected(int position) {
+                actionBar.setSelectedNavigationItem(position);
+            }
+        });
+        
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
         actionBar.setHomeButtonEnabled(false);
 
-        for (String tab : tabs) {
-            actionBar.addTab(actionBar.newTab().setText(tab).setTabListener(this));
+        for (String tabText : tabs) {
+            ActionBar.Tab tab = actionBar.newTab().setText(" " + tabText).setTabListener(this);
+            actionBar.addTab(tab);
         }
 
     }
@@ -56,8 +65,9 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
         if (id == R.id.action_about) {
+            Intent intent = new Intent(this, AboutActivity.class);
+            startActivity(intent);
             return true;
         }
 

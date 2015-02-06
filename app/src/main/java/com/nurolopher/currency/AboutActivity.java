@@ -2,8 +2,6 @@ package com.nurolopher.currency;
 
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 
 
 public class AboutActivity extends ActionBarActivity {
@@ -13,5 +11,6 @@ public class AboutActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about);
     }
+
 
 }

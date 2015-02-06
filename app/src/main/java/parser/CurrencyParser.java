@@ -32,8 +32,9 @@ public class CurrencyParser extends AsyncTask<String, Integer, String[][]> {
     @Override
     protected String[][] doInBackground(String... urls) {
         String[][] currencyTable = new String[urls.length][4];
-
+        int actual_index = 0, count = 0;
         for (int index = 0; index < urls.length; index++) {
+            count = 0;
             try {
                 Document document;
                 Elements rows;
@@ -43,21 +44,38 @@ public class CurrencyParser extends AsyncTask<String, Integer, String[][]> {
                         rows = document.getElementsByClass("row");
                         for (int i = 1; i < rows.size(); i++) {
                             Elements rowCells = rows.get(i).getElementsByClass("cell");
-                            currencyTable[index][i - 1] = "ЭкоИсламик;" + rowCells.get(0).text() + ";" + rowCells.get(1).text() + ";" + rowCells.get(2).text();
+                            if (rowCells.size() > 0) {
+                                currencyTable[actual_index][i - 1] = "ЭкоИсламик;" + rowCells.get(0).text() + ";" + rowCells.get(1).text() + ";" + rowCells.get(2).text();
+                                count = 1;
+                            }
                         }
                         break;
                     case "http://www.nbkr.kg/XML/daily.xml":
                         document = Jsoup.parse(Jsoup.connect(urls[index]).get().body().toString(), urls[index], Parser.xmlParser());
                         rows = document.select("Currency");
                         for (int i = 0; i < rows.size(); i++) {
-                            currencyTable[index][i] = "Нацбанк;" + rows.get(i).attr("isocode") + ";" + rows.get(i).select("Value").get(0).text() + ";" + rows.get(i).select("Value").get(0).text();
+                            currencyTable[actual_index][i] = "Нацбанк;" + rows.get(i).attr("isocode") + ";" + rows.get(i).select("Value").get(0).text() + ";" + rows.get(i).select("Value").get(0).text();
+                            count = 1;
                         }
+                        break;
+                    case "http://www.demirbank.kg/en.html":
+                        document = Jsoup.connect(urls[index]).get();
+                        rows = document.select("#moneytable tr");
+                        for (int i = 1; i < 5; i++) {
+                            Elements rowCells = rows.get(i).select("td");
+                            if (rowCells.size() > 0) {
+                                currencyTable[actual_index][i - 1] = "ДемирБанк;" + rowCells.get(0).select("strong").get(0).text() + ";" + rowCells.get(1).text() + ";" + rowCells.get(2).text();
+                                count = 1;
+                            }
+                        }
+                        break;
                     default:
                         break;
                 }
             } catch (IOException e) {
                 Log.e(TAG, "Cant' connect to: " + urls[index].toString());
             }
+            actual_index += count;
             publishProgress(index);
         }
 
