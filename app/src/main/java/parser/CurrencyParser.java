@@ -4,12 +4,10 @@ import android.os.AsyncTask;
 import android.support.v4.app.ListFragment;
 import android.util.Log;
 
-import com.nurolopher.currency.DollarFragment;
 import com.nurolopher.currency.R;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
 import org.jsoup.parser.Parser;
 import org.jsoup.select.Elements;
 
@@ -70,7 +68,7 @@ public class CurrencyParser extends AsyncTask<String, Integer, String[][]> {
     protected void onPostExecute(String[][] currencies) {
         super.onPostExecute(currencies);
         Log.i(TAG, Arrays.deepToString(currencies));
-        CurrencyAdapter currencyAdapter = new CurrencyAdapter(fragment.getActivity(), R.layout.currency_list_item, currencies, currencyType);
+        CurrencyAdapter currencyAdapter = new CurrencyAdapter(fragment.getActivity(), R.layout.fragment_currency, currencies, currencyType);
         fragment.setListAdapter(currencyAdapter);
     }
 

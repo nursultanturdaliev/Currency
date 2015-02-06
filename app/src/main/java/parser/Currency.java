@@ -1,4 +1,4 @@
-package com.nurolopher.currency;
+package parser;
 
 /**
  * Created by nursultan on 6-Feb 15.

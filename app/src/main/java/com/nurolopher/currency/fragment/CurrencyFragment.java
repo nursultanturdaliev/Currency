@@ -1,4 +1,4 @@
-package com.nurolopher.currency;
+package com.nurolopher.currency.fragment;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -12,16 +12,13 @@ import parser.CurrencyParser;
  * <p/>
  * interface.
  */
-public class DollarFragment extends ListFragment {
+public class CurrencyFragment extends ListFragment {
 
     private static final String ARG_CURRENCY_TYPE = "currencyType";
-
-    // TODO: Rename and change types of parameters
     private String currencyType;
 
-    // TODO: Rename and change types of parameters
-    public static DollarFragment newInstance(String currencyType) {
-        DollarFragment fragment = new DollarFragment();
+    public static CurrencyFragment newInstance(String currencyType) {
+        CurrencyFragment fragment = new CurrencyFragment();
         Bundle args = new Bundle();
         args.putString(ARG_CURRENCY_TYPE, currencyType);
         fragment.setArguments(args);
@@ -32,7 +29,7 @@ public class DollarFragment extends ListFragment {
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
      */
-    public DollarFragment() {
+    public CurrencyFragment() {
     }
 
     @Override

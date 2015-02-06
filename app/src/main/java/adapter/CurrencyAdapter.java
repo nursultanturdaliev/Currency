@@ -18,7 +18,7 @@ public class CurrencyAdapter extends ArrayAdapter {
     private String currencyType;
 
     public CurrencyAdapter(Context context, int resource, String[][] currencies, String currencyType) {
-        //super(context, R.layout.currency_list_item,items);
+        //super(context, R.layout.fragment_currency,items);
         super(context, resource, currencies);
         this.currencies = currencies;
         this.currencyType = currencyType;
@@ -28,7 +28,7 @@ public class CurrencyAdapter extends ArrayAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-        View rowView = inflater.inflate(R.layout.currency_list_item, parent, false);
+        View rowView = inflater.inflate(R.layout.fragment_currency, parent, false);
         TextView title = (TextView) rowView.findViewById(R.id.textViewTitle);
         TextView buy = (TextView) rowView.findViewById(R.id.textViewBuy);
         TextView sell = (TextView) rowView.findViewById(R.id.textViewSell);

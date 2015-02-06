@@ -2,8 +2,9 @@ package adapter;
 
 import android.support.v4.app.*;
 
-import com.nurolopher.currency.Currency;
-import com.nurolopher.currency.DollarFragment;
+import parser.Currency;
+
+import com.nurolopher.currency.fragment.CurrencyFragment;
 
 /**
  * Created by nursultan on 5-Feb 15.
@@ -18,13 +19,13 @@ public class TabsPagerAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         switch (position) {
             case 0:
-                return DollarFragment.newInstance(Currency.USD);
+                return CurrencyFragment.newInstance(Currency.USD);
             case 1:
-                return DollarFragment.newInstance(Currency.EUR);
+                return CurrencyFragment.newInstance(Currency.EUR);
             case 2:
-                return DollarFragment.newInstance(Currency.RUB);
+                return CurrencyFragment.newInstance(Currency.RUB);
             default:
-                return DollarFragment.newInstance(Currency.KZT);
+                return CurrencyFragment.newInstance(Currency.KZT);
         }
 
     }
