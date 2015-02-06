@@ -18,7 +18,6 @@ public class CurrencyAdapter extends ArrayAdapter {
     private String currencyType;
 
     public CurrencyAdapter(Context context, int resource, String[][] currencies, String currencyType) {
-        //super(context, R.layout.fragment_currency,items);
         super(context, resource, currencies);
         this.currencies = currencies;
         this.currencyType = currencyType;

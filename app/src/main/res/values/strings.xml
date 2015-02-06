@@ -17,5 +17,8 @@
     <string name="title_activity_about">About</string>
     <string name="action_update">update</string>
     <string name="update">Update</string>
+    <string name="nbkr">NBKR</string>
+    <string name="eco">ECOISLAMIC</string>
+    <string name="demir">DEMIRBANK</string>
 
 </resources>

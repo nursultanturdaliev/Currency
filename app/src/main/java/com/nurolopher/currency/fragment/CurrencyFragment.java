@@ -4,15 +4,9 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 
-import parser.Currency;
+import parser.BankURL;
 import parser.CurrencyParser;
 
-/**
- * A fragment representing a list of Items.
- * <p/>
- * <p/>
- * interface.
- */
 public class CurrencyFragment extends ListFragment {
 
     private static final String ARG_CURRENCY_TYPE = "currencyType";
@@ -40,7 +34,7 @@ public class CurrencyFragment extends ListFragment {
             currencyType = getArguments().getString(ARG_CURRENCY_TYPE);
         }
         CurrencyParser currencyParser = new CurrencyParser(this, currencyType);
-        currencyParser.execute(Currency.bankUrls);
+        currencyParser.execute(BankURL.getArrayURL());
     }
 
 
