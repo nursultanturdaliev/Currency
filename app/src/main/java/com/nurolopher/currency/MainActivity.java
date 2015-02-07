@@ -19,11 +19,9 @@ import adapter.TabsPagerAdapter;
 
 public class MainActivity extends FragmentActivity implements ActionBar.TabListener {
 
-    public static final String TAG = "MainActivity";
+    private static final String TAG = "MainActivity";
     private ViewPager viewPager;
-    private TabsPagerAdapter tabsPagerAdapter;
     private android.app.ActionBar actionBar;
-    private String[] tabs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,8 +31,8 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 
         viewPager = (ViewPager) findViewById(R.id.pager);
         actionBar = getActionBar();
-        tabsPagerAdapter = new TabsPagerAdapter(getSupportFragmentManager());
-        tabs = getResources().getStringArray(R.array.currency_titles);
+        TabsPagerAdapter tabsPagerAdapter = new TabsPagerAdapter(getSupportFragmentManager());
+        String[] tabs = getResources().getStringArray(R.array.currency_titles);
 
         viewPager.setAdapter(tabsPagerAdapter);
         viewPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
@@ -48,7 +46,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
         actionBar.setHomeButtonEnabled(false);
 
         for (String tabText : tabs) {
-            ActionBar.Tab tab = actionBar.newTab().setText(" " + tabText).setTabListener(this);
+            ActionBar.Tab tab = actionBar.newTab().setText(tabText).setTabListener(this);
             actionBar.addTab(tab);
         }
 

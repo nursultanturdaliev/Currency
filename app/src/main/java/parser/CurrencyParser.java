@@ -4,10 +4,12 @@ import android.content.res.Resources;
 import android.os.AsyncTask;
 import android.support.v4.app.ListFragment;
 import android.util.Log;
+
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.parser.Parser;
 import org.jsoup.select.Elements;
+
 import java.io.IOException;
 import java.util.Arrays;
 
@@ -20,7 +22,7 @@ import adapter.CurrencyAdapter;
  */
 public class CurrencyParser extends AsyncTask<String, Integer, String[][]> {
     private static final String TAG = "CurrencyParser";
-    public ListFragment fragment;
+    private ListFragment fragment;
     private String currencyType;
 
     public CurrencyParser(ListFragment fragment, String currencyType) {
@@ -32,7 +34,8 @@ public class CurrencyParser extends AsyncTask<String, Integer, String[][]> {
     protected String[][] doInBackground(String... urls) {
         String[][] currencyTable = new String[urls.length][4];
         Resources resources = fragment.getActivity().getResources();
-        int actual_index = 0, count = 0;
+        int actual_index = 0;
+        int count;
         for (int index = 0; index < urls.length; index++) {
             count = 0;
             try {
@@ -73,7 +76,7 @@ public class CurrencyParser extends AsyncTask<String, Integer, String[][]> {
                         break;
                 }
             } catch (IOException e) {
-                Log.e(TAG, "Cant' connect to: " + urls[index].toString());
+                Log.e(TAG, "Cant' connect to: " + urls[index]);
             }
             actual_index += count;
             publishProgress(index);

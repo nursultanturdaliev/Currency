@@ -3,7 +3,6 @@ package com.nurolopher.currency.fragment;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
-
 import parser.BankURL;
 import parser.CurrencyParser;
 
@@ -13,17 +12,16 @@ public class CurrencyFragment extends ListFragment {
     private String currencyType;
 
     public static CurrencyFragment newInstance(String currencyType) {
+
         CurrencyFragment fragment = new CurrencyFragment();
+
         Bundle args = new Bundle();
         args.putString(ARG_CURRENCY_TYPE, currencyType);
         fragment.setArguments(args);
+
         return fragment;
     }
 
-    /**
-     * Mandatory empty constructor for the fragment manager to instantiate the
-     * fragment (e.g. upon screen orientation changes).
-     */
     public CurrencyFragment() {
     }
 
