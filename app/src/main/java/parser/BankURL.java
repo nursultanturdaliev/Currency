@@ -10,6 +10,6 @@ public class BankURL {
     public static final String NBKR = "http://www.nbkr.kg/XML/daily.xml";
 
     public static String[] getArrayURL() {
-        return new String[]{BankURL.NBKR, BankURL.DEMIR, BankURL.ECO};
+        return new String[]{NBKR, DEMIR, ECO};
     }
 }

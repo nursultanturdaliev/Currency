@@ -39,38 +39,15 @@ public class CurrencyParser extends AsyncTask<String, Integer, String[][]> {
         for (int index = 0; index < urls.length; index++) {
             count = 0;
             try {
-                Document document;
-                Elements rows;
                 switch (urls[index]) {
                     case BankURL.ECO:
-                        document = Jsoup.connect(urls[index]).get();
-                        rows = document.getElementsByClass("row");
-                        for (int i = 1; i < rows.size(); i++) {
-                            Elements rowCells = rows.get(i).getElementsByClass("cell");
-                            if (rowCells.size() > 0) {
-                                currencyTable[actual_index][i - 1] = resources.getString(R.string.eco) + ";" + rowCells.get(0).text() + ";" + rowCells.get(1).text() + ";" + rowCells.get(2).text();
-                                count = 1;
-                            }
-                        }
+                        count = parseEco(currencyTable, resources, actual_index, count, index, urls);
                         break;
                     case BankURL.NBKR:
-                        document = Jsoup.parse(Jsoup.connect(urls[index]).get().body().toString(), urls[index], Parser.xmlParser());
-                        rows = document.select("Currency");
-                        for (int i = 0; i < rows.size(); i++) {
-                            currencyTable[actual_index][i] = resources.getString(R.string.nbkr) + ";" + rows.get(i).attr("isocode") + ";" + rows.get(i).select("Value").get(0).text() + ";" + rows.get(i).select("Value").get(0).text();
-                            count = 1;
-                        }
+                        count = parseNBKR(currencyTable, resources, actual_index, count, index, urls);
                         break;
                     case BankURL.DEMIR:
-                        document = Jsoup.connect(urls[index]).get();
-                        rows = document.select("#moneytable tr");
-                        for (int i = 1; i < 5; i++) {
-                            Elements rowCells = rows.get(i).select("td");
-                            if (rowCells.size() > 0) {
-                                currencyTable[actual_index][i - 1] = resources.getString(R.string.demir) + ";" + rowCells.get(0).select("strong").get(0).text() + ";" + rowCells.get(1).text() + ";" + rowCells.get(2).text();
-                                count = 1;
-                            }
-                        }
+                        count = parseDEMIR(currencyTable, resources, actual_index, count, index, urls);
                         break;
                     default:
                         break;
@@ -83,6 +60,48 @@ public class CurrencyParser extends AsyncTask<String, Integer, String[][]> {
         }
 
         return currencyTable;
+    }
+
+    private int parseDEMIR(String[][] currencyTable, Resources resources, int actual_index, int count, int index, String[] urls) throws IOException {
+        Document document;
+        Elements rows;
+        document = Jsoup.connect(urls[index]).get();
+        rows = document.select("#moneytable tr");
+        for (int i = 1; i < 5; i++) {
+            Elements rowCells = rows.get(i).select("td");
+            if (rowCells.size() > 0) {
+                currencyTable[actual_index][i - 1] = resources.getString(R.string.demir) + ";" + rowCells.get(0).select("strong").get(0).text() + ";" + rowCells.get(1).text() + ";" + rowCells.get(2).text();
+                count = 1;
+            }
+        }
+        return count;
+    }
+
+    private int parseNBKR(String[][] currencyTable, Resources resources, int actual_index, int count, int index, String[] urls) throws IOException {
+        Document document;
+        Elements rows;
+        document = Jsoup.parse(Jsoup.connect(urls[index]).get().body().toString(), urls[index], Parser.xmlParser());
+        rows = document.select("Currency");
+        for (int i = 0; i < rows.size(); i++) {
+            currencyTable[actual_index][i] = resources.getString(R.string.nbkr) + ";" + rows.get(i).attr("isocode") + ";" + rows.get(i).select("Value").get(0).text() + ";" + rows.get(i).select("Value").get(0).text();
+            count = 1;
+        }
+        return count;
+    }
+
+    private int parseEco(String[][] currencyTable, Resources resources, int actual_index, int count, int index, String[] urls) throws IOException {
+        Document document;
+        Elements rows;
+        document = Jsoup.connect(urls[index]).get();
+        rows = document.getElementsByClass("row");
+        for (int i = 1; i < rows.size(); i++) {
+            Elements rowCells = rows.get(i).getElementsByClass("cell");
+            if (rowCells.size() > 0) {
+                currencyTable[actual_index][i - 1] = resources.getString(R.string.eco) + ";" + rowCells.get(0).text() + ";" + rowCells.get(1).text() + ";" + rowCells.get(2).text();
+                count = 1;
+            }
+        }
+        return count;
     }
 
     @Override
