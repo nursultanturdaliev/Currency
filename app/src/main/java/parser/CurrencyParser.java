@@ -58,8 +58,12 @@ public class CurrencyParser extends AsyncTask<String, Integer, String[][]> {
                         break;
                     case BankURL.OPTIMA:
                         count = parseOPTIMA(actual_index, count, index, urls);
-                    default:
                         break;
+                    case BankURL.ROSIN:
+                        count = parseROSIN(actual_index, count, index, urls);
+                        break;
+                    default:
+
                 }
             } catch (IOException e) {
                 Log.e(TAG, "Cant' connect to: " + urls[index]);
@@ -142,6 +146,18 @@ public class CurrencyParser extends AsyncTask<String, Integer, String[][]> {
         for (int i = 2; i < 6; i++) {
             Elements cell = rows.get(i).select("td span");
             currencyTable[actual_index][i - 2] = context.getResources().getString(R.string.optima) + ";" + Currency.getCurrencyArrayAt(i - 2) + ";" + cell.get(0).text() + ";" + cell.get(1).text();
+            count = 1;
+        }
+        return count;
+    }
+
+    private int parseROSIN(int actual_index, int count, int index, String[] urls) throws IOException {
+        document = Jsoup.connect(urls[index]).get();
+        Element table = document.getElementsByClass("currency").first().select("table").first();
+        Elements rows = table.select("tbody tr");
+        for (int i = 0; i < 4; i++) {
+            Elements cells = rows.get(i).select("td");
+            currencyTable[actual_index][i] = context.getResources().getString(R.string.rosin) + ";" + cells.get(0).select("div").first().text() + ";" + cells.get(1).text() + ";" + cells.get(2).text();
             count = 1;
         }
         return count;
