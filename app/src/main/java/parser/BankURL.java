@@ -12,8 +12,9 @@ public class BankURL {
     public static final String ROSIN = "http://www.rib.kg/";
     public static final String KICB = "http://www.kicb.net/welcome/";
     public static final String BTA = "http://www.btabank.kg/en/";
+    public static final String AYIL = "http://www.ab.kg/";
 
     public static String[] getArrayURL() {
-        return new String[]{NBKR, DEMIR, ECO, OPTIMA, ROSIN, KICB, BTA};
+        return new String[]{NBKR, DEMIR, ECO, OPTIMA, ROSIN, KICB, BTA, AYIL};
     }
 }
