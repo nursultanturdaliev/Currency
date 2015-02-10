@@ -3,11 +3,17 @@ package com.nurolopher.currency.fragment;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
-import parser.BankURL;
-import parser.CurrencyParser;
+import android.util.Log;
+
+import com.nurolopher.currency.MainActivity;
+import com.nurolopher.currency.R;
+
+import adapter.CurrencyAdapter;
 
 public class CurrencyFragment extends ListFragment {
 
+
+    private static final String TAG = "CurrencyFragment";
     private static final String ARG_CURRENCY_TYPE = "currencyType";
     private String currencyType;
 
@@ -31,14 +37,18 @@ public class CurrencyFragment extends ListFragment {
         if (getArguments() != null) {
             currencyType = getArguments().getString(ARG_CURRENCY_TYPE);
         }
-        CurrencyParser currencyParser = new CurrencyParser(this, currencyType);
-        currencyParser.execute(BankURL.getArrayURL());
+        CurrencyAdapter currencyAdapter = new CurrencyAdapter(getActivity(), R.layout.fragment_currency, MainActivity.currencyTable, currencyType);
+        setListAdapter(currencyAdapter);
+        
+
     }
 
 
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
+        MainActivity.fragments.add(this);
+        Log.i(TAG, "Fragment added:" + this.currencyType);
     }
 
     @Override

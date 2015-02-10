@@ -5,36 +5,50 @@ import android.app.ActionBar;
 import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.ListFragment;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.ViewConfiguration;
-
 import java.lang.reflect.Field;
+import java.util.ArrayList;
 
 import adapter.TabsPagerAdapter;
+import parser.BankURL;
+import parser.CurrencyParser;
 
 
 public class MainActivity extends FragmentActivity implements ActionBar.TabListener {
 
     private static final String TAG = "MainActivity";
-    private ViewPager viewPager;
+    public static ViewPager viewPager;
     private android.app.ActionBar actionBar;
+    public static String[][] currencyTable = null;
+    public static TabsPagerAdapter tabsPagerAdapter;
+    public static ArrayList<ListFragment> fragments = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         getOverflowMenu();
 
         viewPager = (ViewPager) findViewById(R.id.pager);
         actionBar = getActionBar();
-        TabsPagerAdapter tabsPagerAdapter = new TabsPagerAdapter(getSupportFragmentManager());
-        String[] tabs = getResources().getStringArray(R.array.currency_titles);
 
-        viewPager.setAdapter(tabsPagerAdapter);
+        String[] tabs = getResources().getStringArray(R.array.currency_titles);
+        for (String tabText : tabs) {
+            ActionBar.Tab tab = actionBar.newTab().setText(tabText).setTabListener(this);
+            actionBar.addTab(tab);
+        }
+
+        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+        actionBar.setHomeButtonEnabled(false);
+
         viewPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
             @Override
             public void onPageSelected(int position) {
@@ -42,14 +56,8 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
             }
         });
 
-        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
-        actionBar.setHomeButtonEnabled(false);
-
-        for (String tabText : tabs) {
-            ActionBar.Tab tab = actionBar.newTab().setText(tabText).setTabListener(this);
-            actionBar.addTab(tab);
-        }
-
+        CurrencyParser currencyParser = new CurrencyParser(this);
+        currencyParser.execute(BankURL.getArrayURL());
     }
 
 

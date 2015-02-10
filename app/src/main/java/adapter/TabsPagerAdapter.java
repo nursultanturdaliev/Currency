@@ -11,6 +11,7 @@ import com.nurolopher.currency.fragment.CurrencyFragment;
  */
 public class TabsPagerAdapter extends FragmentPagerAdapter {
 
+
     public TabsPagerAdapter(FragmentManager fm) {
         super(fm);
     }

@@ -1,7 +1,11 @@
 package parser;
 
+import android.app.Activity;
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.res.Resources;
 import android.os.AsyncTask;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.ListFragment;
 import android.util.Log;
 
@@ -13,27 +17,33 @@ import org.jsoup.select.Elements;
 import java.io.IOException;
 import java.util.Arrays;
 
+import com.nurolopher.currency.MainActivity;
 import com.nurolopher.currency.R;
+import com.nurolopher.currency.fragment.CurrencyFragment;
 
 import adapter.CurrencyAdapter;
+import adapter.TabsPagerAdapter;
 
 /**
  * Created by nursultan on 6-Feb 15.
  */
 public class CurrencyParser extends AsyncTask<String, Integer, String[][]> {
     private static final String TAG = "CurrencyParser";
-    private ListFragment fragment;
-    private String currencyType;
+    private Context context;
+    private Document document;
+    private Elements rows;
+    private String[][] currencyTable;
+    private ProgressDialog progressDialog;
 
-    public CurrencyParser(ListFragment fragment, String currencyType) {
-        this.fragment = fragment;
-        this.currencyType = currencyType;
+    public CurrencyParser(Context context) {
+        this.context = context;
+        progressDialog = new ProgressDialog(context);
     }
 
     @Override
     protected String[][] doInBackground(String... urls) {
-        String[][] currencyTable = new String[urls.length][4];
-        Resources resources = fragment.getActivity().getResources();
+
+        currencyTable = new String[urls.length][4];
         int actual_index = 0;
         int count;
         for (int index = 0; index < urls.length; index++) {
@@ -41,13 +51,13 @@ public class CurrencyParser extends AsyncTask<String, Integer, String[][]> {
             try {
                 switch (urls[index]) {
                     case BankURL.ECO:
-                        count = parseEco(currencyTable, resources, actual_index, count, index, urls);
+                        count = parseEco(actual_index, count, index, urls);
                         break;
                     case BankURL.NBKR:
-                        count = parseNBKR(currencyTable, resources, actual_index, count, index, urls);
+                        count = parseNBKR(actual_index, count, index, urls);
                         break;
                     case BankURL.DEMIR:
-                        count = parseDEMIR(currencyTable, resources, actual_index, count, index, urls);
+                        count = parseDEMIR(actual_index, count, index, urls);
                         break;
                     default:
                         break;
@@ -62,59 +72,71 @@ public class CurrencyParser extends AsyncTask<String, Integer, String[][]> {
         return currencyTable;
     }
 
-    private int parseDEMIR(String[][] currencyTable, Resources resources, int actual_index, int count, int index, String[] urls) throws IOException {
-        Document document;
-        Elements rows;
-        document = Jsoup.connect(urls[index]).get();
-        rows = document.select("#moneytable tr");
-        for (int i = 1; i < 5; i++) {
-            Elements rowCells = rows.get(i).select("td");
-            if (rowCells.size() > 0) {
-                currencyTable[actual_index][i - 1] = resources.getString(R.string.demir) + ";" + rowCells.get(0).select("strong").get(0).text() + ";" + rowCells.get(1).text() + ";" + rowCells.get(2).text();
-                count = 1;
-            }
-        }
-        return count;
-    }
+    @Override
+    protected void onPreExecute() {
+        super.onPreExecute();
+        progressDialog.setMessage("Processing...");
+        progressDialog.setMax(4);
+        progressDialog.show();
 
-    private int parseNBKR(String[][] currencyTable, Resources resources, int actual_index, int count, int index, String[] urls) throws IOException {
-        Document document;
-        Elements rows;
-        document = Jsoup.parse(Jsoup.connect(urls[index]).get().body().toString(), urls[index], Parser.xmlParser());
-        rows = document.select("Currency");
-        for (int i = 0; i < rows.size(); i++) {
-            currencyTable[actual_index][i] = resources.getString(R.string.nbkr) + ";" + rows.get(i).attr("isocode") + ";" + rows.get(i).select("Value").get(0).text() + ";" + rows.get(i).select("Value").get(0).text();
-            count = 1;
-        }
-        return count;
-    }
 
-    private int parseEco(String[][] currencyTable, Resources resources, int actual_index, int count, int index, String[] urls) throws IOException {
-        Document document;
-        Elements rows;
-        document = Jsoup.connect(urls[index]).get();
-        rows = document.getElementsByClass("row");
-        for (int i = 1; i < rows.size(); i++) {
-            Elements rowCells = rows.get(i).getElementsByClass("cell");
-            if (rowCells.size() > 0) {
-                currencyTable[actual_index][i - 1] = resources.getString(R.string.eco) + ";" + rowCells.get(0).text() + ";" + rowCells.get(1).text() + ";" + rowCells.get(2).text();
-                count = 1;
-            }
-        }
-        return count;
     }
 
     @Override
     protected void onPostExecute(String[][] currencies) {
         super.onPostExecute(currencies);
         Log.i(TAG, Arrays.deepToString(currencies));
-        CurrencyAdapter currencyAdapter = new CurrencyAdapter(fragment.getActivity(), R.layout.fragment_currency, currencies, currencyType);
-        fragment.setListAdapter(currencyAdapter);
+
+        MainActivity.currencyTable = currencies;
+        progressDialog.cancel();
+
+
+        MainActivity.tabsPagerAdapter = new TabsPagerAdapter(((MainActivity) context).getSupportFragmentManager());
+        MainActivity.viewPager.setAdapter(MainActivity.tabsPagerAdapter);
     }
 
     @Override
     protected void onProgressUpdate(Integer... values) {
         super.onProgressUpdate(values);
+        Log.i(TAG, values.toString());
+        progressDialog.setProgress(values[0]);
 
+    }
+
+    private int parseDEMIR(int actual_index, int count, int index, String[] urls) throws IOException {
+        document = Jsoup.connect(urls[index]).get();
+        rows = document.select("#moneytable tr");
+        for (int i = 1; i < 5; i++) {
+            Elements rowCells = rows.get(i).select("td");
+            if (rowCells.size() > 0) {
+                currencyTable[actual_index][i - 1] = context.getResources().getString(R.string.demir) + ";" + rowCells.get(0).select("strong").get(0).text() + ";" + rowCells.get(1).text() + ";" + rowCells.get(2).text();
+                count = 1;
+            }
+        }
+        return count;
+    }
+
+    private int parseNBKR(int actual_index, int count, int index, String[] urls) throws IOException {
+        document = Jsoup.parse(Jsoup.connect(urls[index]).get().body().toString(), urls[index], Parser.xmlParser());
+        rows = document.select("Currency");
+        for (int i = 0; i < rows.size(); i++) {
+            // TODO: Not buy and sell but. on two dates should be displayed
+            currencyTable[actual_index][i] = context.getResources().getString(R.string.nbkr) + ";" + rows.get(i).attr("isocode") + ";" + rows.get(i).select("Value").get(0).text() + ";" + rows.get(i).select("Value").get(0).text();
+            count = 1;
+        }
+        return count;
+    }
+
+    private int parseEco(int actual_index, int count, int index, String[] urls) throws IOException {
+        document = Jsoup.connect(urls[index]).get();
+        rows = document.getElementsByClass("row");
+        for (int i = 1; i < rows.size(); i++) {
+            Elements rowCells = rows.get(i).getElementsByClass("cell");
+            if (rowCells.size() > 0) {
+                currencyTable[actual_index][i - 1] = context.getResources().getString(R.string.eco) + ";" + rowCells.get(0).text() + ";" + rowCells.get(1).text() + ";" + rowCells.get(2).text();
+                count = 1;
+            }
+        }
+        return count;
     }
 }
