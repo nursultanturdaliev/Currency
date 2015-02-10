@@ -6,19 +6,21 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
+
+import parser.CurrencyParser;
+
 import com.nurolopher.currency.R;
+
 
 /**
  * Created by nursultan on 5-Feb 15.
  */
 public class CurrencyAdapter extends ArrayAdapter {
 
-    private final String[][] currencies;
     private final String currencyType;
 
-    public CurrencyAdapter(Context context, int resource, String[][] currencies, String currencyType) {
-        super(context, resource, currencies);
-        this.currencies = currencies;
+    public CurrencyAdapter(Context context, int resource, String currencyType) {
+        super(context, resource, CurrencyParser.currencyTable);
         this.currencyType = currencyType;
     }
 
@@ -32,8 +34,8 @@ public class CurrencyAdapter extends ArrayAdapter {
         TextView buy = (TextView) rowView.findViewById(R.id.textViewBuy);
         TextView sell = (TextView) rowView.findViewById(R.id.textViewSell);
 
-        for (int index = 0; index < currencies[position].length; index++) {
-            String[] str = currencies[position][index].split(";");
+        for (int index = 0; index < CurrencyParser.currencyTable[position].length; index++) {
+            String[] str = CurrencyParser.currencyTable[position][index].split(";");
             if (str[1].equals(currencyType)) {
                 title.setText(str[0]);
                 buy.setText(str[2]);

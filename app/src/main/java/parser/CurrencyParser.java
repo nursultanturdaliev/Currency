@@ -19,9 +19,7 @@ import java.util.Arrays;
 
 import com.nurolopher.currency.MainActivity;
 import com.nurolopher.currency.R;
-import com.nurolopher.currency.fragment.CurrencyFragment;
 
-import adapter.CurrencyAdapter;
 import adapter.TabsPagerAdapter;
 
 /**
@@ -32,7 +30,7 @@ public class CurrencyParser extends AsyncTask<String, Integer, String[][]> {
     private Context context;
     private Document document;
     private Elements rows;
-    private String[][] currencyTable;
+    public static String[][] currencyTable;
     private ProgressDialog progressDialog;
 
     public CurrencyParser(Context context) {
@@ -85,9 +83,8 @@ public class CurrencyParser extends AsyncTask<String, Integer, String[][]> {
     @Override
     protected void onPostExecute(String[][] currencies) {
         super.onPostExecute(currencies);
-        Log.i(TAG, Arrays.deepToString(currencies));
 
-        MainActivity.currencyTable = currencies;
+        currencyTable = currencies;
         progressDialog.cancel();
 
 
@@ -98,7 +95,6 @@ public class CurrencyParser extends AsyncTask<String, Integer, String[][]> {
     @Override
     protected void onProgressUpdate(Integer... values) {
         super.onProgressUpdate(values);
-        Log.i(TAG, values.toString());
         progressDialog.setProgress(values[0]);
 
     }

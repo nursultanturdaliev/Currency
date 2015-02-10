@@ -6,15 +6,17 @@ import android.support.v4.app.ListFragment;
 import android.util.Log;
 
 import com.nurolopher.currency.MainActivity;
-import com.nurolopher.currency.R;
 
 import adapter.CurrencyAdapter;
+
+import com.nurolopher.currency.R;
+
 
 public class CurrencyFragment extends ListFragment {
 
 
     private static final String TAG = "CurrencyFragment";
-    private static final String ARG_CURRENCY_TYPE = "currencyType";
+    private static final String ARG_CURRENCY_TYPE = "currency_type";
     private String currencyType;
 
     public static CurrencyFragment newInstance(String currencyType) {
@@ -37,9 +39,9 @@ public class CurrencyFragment extends ListFragment {
         if (getArguments() != null) {
             currencyType = getArguments().getString(ARG_CURRENCY_TYPE);
         }
-        CurrencyAdapter currencyAdapter = new CurrencyAdapter(getActivity(), R.layout.fragment_currency, MainActivity.currencyTable, currencyType);
+        CurrencyAdapter currencyAdapter = new CurrencyAdapter(getActivity(), R.layout.fragment_currency, currencyType);
         setListAdapter(currencyAdapter);
-        
+
 
     }
 

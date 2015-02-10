@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.ViewConfiguration;
+
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 
@@ -26,7 +27,6 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
     private static final String TAG = "MainActivity";
     public static ViewPager viewPager;
     private android.app.ActionBar actionBar;
-    public static String[][] currencyTable = null;
     public static TabsPagerAdapter tabsPagerAdapter;
     public static ArrayList<ListFragment> fragments = new ArrayList<>();
 
