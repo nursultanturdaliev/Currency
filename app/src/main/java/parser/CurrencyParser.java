@@ -62,6 +62,8 @@ public class CurrencyParser extends AsyncTask<String, Integer, String[][]> {
                     case BankURL.ROSIN:
                         count = parseROSIN(actual_index, count, index, urls);
                         break;
+                    case BankURL.KICB:
+                        count = parseKICB(actual_index, count, index, urls);
                     default:
 
                 }
@@ -158,6 +160,19 @@ public class CurrencyParser extends AsyncTask<String, Integer, String[][]> {
         for (int i = 0; i < 4; i++) {
             Elements cells = rows.get(i).select("td");
             currencyTable[actual_index][i] = context.getResources().getString(R.string.rosin) + ";" + cells.get(0).select("div").first().text() + ";" + cells.get(1).text() + ";" + cells.get(2).text();
+            count = 1;
+        }
+        return count;
+    }
+
+    private int parseKICB(int actual_index, int count, int index, String[] urls) throws IOException {
+        document = Jsoup.connect(urls[index]).get();
+        Element table = document.getElementsByClass("con").first();
+        Elements rows = table.getElementsByClass("cur_line");
+        rows.remove(rows.select("img"));
+        for (int i = 1; i < 5; i++) {
+            Elements cells = rows.get(i).select("span");
+            currencyTable[actual_index][i - 1] = context.getResources().getString(R.string.kicb) + ";" + cells.get(0).text() + ";" + cells.get(1).text() + ";" + cells.get(2).text();
             count = 1;
         }
         return count;

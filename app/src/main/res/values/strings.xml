@@ -18,4 +18,5 @@
     <string name="demir">DemirBank</string>
     <string name="optima">Optima</string>
     <string name="rosin">Rosinbank</string>
+    <string name="kicb">KICB</string>
 </resources>
