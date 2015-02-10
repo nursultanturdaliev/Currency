@@ -48,24 +48,27 @@ public class CurrencyParser extends AsyncTask<String, Integer, String[][]> {
             try {
                 switch (urls[index]) {
                     case BankURL.ECO:
-                        count = parseEco(actual_index, count, index, urls);
+                        count = parseEco(actual_index, count, BankURL.ECO);
                         break;
                     case BankURL.NBKR:
-                        count = parseNBKR(actual_index, count, index, urls);
+                        count = parseNBKR(actual_index, count, BankURL.NBKR);
                         break;
                     case BankURL.DEMIR:
-                        count = parseDEMIR(actual_index, count, index, urls);
+                        count = parseDEMIR(actual_index, count, BankURL.DEMIR);
                         break;
                     case BankURL.OPTIMA:
-                        count = parseOPTIMA(actual_index, count, index, urls);
+                        count = parseOPTIMA(actual_index, count, BankURL.OPTIMA);
                         break;
                     case BankURL.ROSIN:
-                        count = parseROSIN(actual_index, count, index, urls);
+                        count = parseROSIN(actual_index, count, BankURL.ROSIN);
                         break;
                     case BankURL.KICB:
-                        count = parseKICB(actual_index, count, index, urls);
+                        count = parseKICB(actual_index, count, BankURL.KICB);
+                        break;
+                    case BankURL.BTA:
+                        count = parseBTA(actual_index, count, BankURL.BTA);
                     default:
-
+                        break;
                 }
             } catch (IOException e) {
                 Log.e(TAG, "Cant' connect to: " + urls[index]);
@@ -104,8 +107,8 @@ public class CurrencyParser extends AsyncTask<String, Integer, String[][]> {
 
     }
 
-    private int parseDEMIR(int actual_index, int count, int index, String[] urls) throws IOException {
-        document = Jsoup.connect(urls[index]).get();
+    private int parseDEMIR(int actual_index, int count, String url) throws IOException {
+        document = Jsoup.connect(url).get();
         rows = document.select("#moneytable tr");
         for (int i = 1; i < 5; i++) {
             Elements rowCells = rows.get(i).select("td");
@@ -117,8 +120,8 @@ public class CurrencyParser extends AsyncTask<String, Integer, String[][]> {
         return count;
     }
 
-    private int parseNBKR(int actual_index, int count, int index, String[] urls) throws IOException {
-        document = Jsoup.parse(Jsoup.connect(urls[index]).get().body().toString(), urls[index], Parser.xmlParser());
+    private int parseNBKR(int actual_index, int count, String url) throws IOException {
+        document = Jsoup.parse(Jsoup.connect(url).get().body().toString(), url, Parser.xmlParser());
         rows = document.select("Currency");
         for (int i = 0; i < rows.size(); i++) {
             // TODO: Not buy and sell but. on two dates should be displayed
@@ -128,8 +131,8 @@ public class CurrencyParser extends AsyncTask<String, Integer, String[][]> {
         return count;
     }
 
-    private int parseEco(int actual_index, int count, int index, String[] urls) throws IOException {
-        document = Jsoup.connect(urls[index]).get();
+    private int parseEco(int actual_index, int count, String url) throws IOException {
+        document = Jsoup.connect(url).get();
         rows = document.getElementsByClass("row");
         for (int i = 1; i < rows.size(); i++) {
             Elements rowCells = rows.get(i).getElementsByClass("cell");
@@ -141,8 +144,8 @@ public class CurrencyParser extends AsyncTask<String, Integer, String[][]> {
         return count;
     }
 
-    private int parseOPTIMA(int actual_index, int count, int index, String[] urls) throws IOException {
-        document = Jsoup.connect(urls[index]).get();
+    private int parseOPTIMA(int actual_index, int count, String url) throws IOException {
+        document = Jsoup.connect(url).get();
         Element table = document.select(".currency_table").first();
         Elements rows = table.select("tr");
         for (int i = 2; i < 6; i++) {
@@ -153,8 +156,8 @@ public class CurrencyParser extends AsyncTask<String, Integer, String[][]> {
         return count;
     }
 
-    private int parseROSIN(int actual_index, int count, int index, String[] urls) throws IOException {
-        document = Jsoup.connect(urls[index]).get();
+    private int parseROSIN(int actual_index, int count, String url) throws IOException {
+        document = Jsoup.connect(url).get();
         Element table = document.getElementsByClass("currency").first().select("table").first();
         Elements rows = table.select("tbody tr");
         for (int i = 0; i < 4; i++) {
@@ -165,14 +168,25 @@ public class CurrencyParser extends AsyncTask<String, Integer, String[][]> {
         return count;
     }
 
-    private int parseKICB(int actual_index, int count, int index, String[] urls) throws IOException {
-        document = Jsoup.connect(urls[index]).get();
+    private int parseKICB(int actual_index, int count, String url) throws IOException {
+        document = Jsoup.connect(url).get();
         Element table = document.getElementsByClass("con").first();
         Elements rows = table.getElementsByClass("cur_line");
         rows.remove(rows.select("img"));
         for (int i = 1; i < 5; i++) {
             Elements cells = rows.get(i).select("span");
             currencyTable[actual_index][i - 1] = context.getResources().getString(R.string.kicb) + ";" + cells.get(0).text() + ";" + cells.get(1).text() + ";" + cells.get(2).text();
+            count = 1;
+        }
+        return count;
+    }
+
+    private int parseBTA(int actual_index, int count, String url) throws IOException {
+        document = Jsoup.connect(url).get();
+        Elements rows = document.select("table.currency tbody tr");
+        for (int i = 2; i < 6; i++) {
+            Elements cells = rows.get(i).select("td");
+            currencyTable[actual_index][i - 2] = context.getResources().getString(R.string.bta) + ";" + cells.get(0).text() + ";" + cells.get(1).text() + ";" + cells.get(2).text();
             count = 1;
         }
         return count;
