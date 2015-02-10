@@ -3,6 +3,7 @@ package com.nurolopher.currency;
 
 import android.app.ActionBar;
 import android.app.FragmentTransaction;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -29,12 +30,14 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
     private android.app.ActionBar actionBar;
     public static TabsPagerAdapter tabsPagerAdapter;
     public static ArrayList<ListFragment> fragments = new ArrayList<>();
+    public static ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        progressDialog = new ProgressDialog(this);
         getOverflowMenu();
 
         viewPager = (ViewPager) findViewById(R.id.pager);
@@ -58,6 +61,12 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 
         CurrencyParser currencyParser = new CurrencyParser(this);
         currencyParser.execute(BankURL.getArrayURL());
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        MainActivity.progressDialog.dismiss();
     }
 
 

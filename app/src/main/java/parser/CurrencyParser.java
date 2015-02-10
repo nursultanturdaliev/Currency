@@ -11,6 +11,7 @@ import android.util.Log;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
 import org.jsoup.parser.Parser;
 import org.jsoup.select.Elements;
 
@@ -31,11 +32,9 @@ public class CurrencyParser extends AsyncTask<String, Integer, String[][]> {
     private Document document;
     private Elements rows;
     public static String[][] currencyTable;
-    private ProgressDialog progressDialog;
 
     public CurrencyParser(Context context) {
         this.context = context;
-        progressDialog = new ProgressDialog(context);
     }
 
     @Override
@@ -57,6 +56,8 @@ public class CurrencyParser extends AsyncTask<String, Integer, String[][]> {
                     case BankURL.DEMIR:
                         count = parseDEMIR(actual_index, count, index, urls);
                         break;
+                    case BankURL.OPTIMA:
+                        count = parseOPTIMA(actual_index, count, index, urls);
                     default:
                         break;
                 }
@@ -73,10 +74,9 @@ public class CurrencyParser extends AsyncTask<String, Integer, String[][]> {
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
-        progressDialog.setMessage("Processing...");
-        progressDialog.setMax(4);
-        progressDialog.show();
-
+        MainActivity.progressDialog.setMessage("Processing...");
+        MainActivity.progressDialog.setMax(4);
+        MainActivity.progressDialog.show();
 
     }
 
@@ -85,7 +85,7 @@ public class CurrencyParser extends AsyncTask<String, Integer, String[][]> {
         super.onPostExecute(currencies);
 
         currencyTable = currencies;
-        progressDialog.cancel();
+        MainActivity.progressDialog.cancel();
 
 
         MainActivity.tabsPagerAdapter = new TabsPagerAdapter(((MainActivity) context).getSupportFragmentManager());
@@ -95,7 +95,6 @@ public class CurrencyParser extends AsyncTask<String, Integer, String[][]> {
     @Override
     protected void onProgressUpdate(Integer... values) {
         super.onProgressUpdate(values);
-        progressDialog.setProgress(values[0]);
 
     }
 
@@ -132,6 +131,18 @@ public class CurrencyParser extends AsyncTask<String, Integer, String[][]> {
                 currencyTable[actual_index][i - 1] = context.getResources().getString(R.string.eco) + ";" + rowCells.get(0).text() + ";" + rowCells.get(1).text() + ";" + rowCells.get(2).text();
                 count = 1;
             }
+        }
+        return count;
+    }
+
+    private int parseOPTIMA(int actual_index, int count, int index, String[] urls) throws IOException {
+        document = Jsoup.connect(urls[index]).get();
+        Element table = document.select(".currency_table").first();
+        Elements rows = table.select("tr");
+        for (int i = 2; i < 6; i++) {
+            Elements cell = rows.get(i).select("td span");
+            currencyTable[actual_index][i - 2] = context.getResources().getString(R.string.optima) + ";" + Currency.getCurrencyArrayAt(i - 2) + ";" + cell.get(0).text() + ";" + cell.get(1).text();
+            count = 1;
         }
         return count;
     }

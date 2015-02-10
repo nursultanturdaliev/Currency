@@ -14,7 +14,7 @@
     <string name="action_update">update</string>
     <string name="update">Update</string>
     <string name="nbkr">NBKR</string>
-    <string name="eco">ECOISLAMIC</string>
-    <string name="demir">DEMIRBANK</string>
-
+    <string name="eco">Ecoislamic</string>
+    <string name="demir">Demir</string>
+    <string name="optima">Optima</string>
 </resources>

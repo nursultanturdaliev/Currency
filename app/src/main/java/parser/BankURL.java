@@ -8,8 +8,9 @@ public class BankURL {
     public static final String ECO = "http://ecoislamicbank.kg/";
     public static final String DEMIR = "http://www.demirbank.kg/en.html";
     public static final String NBKR = "http://www.nbkr.kg/XML/daily.xml";
+    public static final String OPTIMA = "http://www.optimabank.kg/en/exchange-rates-2.html";
 
     public static String[] getArrayURL() {
-        return new String[]{NBKR, DEMIR, ECO};
+        return new String[]{NBKR, DEMIR, ECO, OPTIMA};
     }
 }
