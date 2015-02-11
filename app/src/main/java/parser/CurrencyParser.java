@@ -80,6 +80,8 @@ public class CurrencyParser extends AsyncTask<String, Integer, String[][]> {
                     case BankURL.FKB:
                         count = parseFKB(actual_index, count, BankURL.FKB);
                         break;
+                    case BankURL.DOS_CREDO:
+                        count = parseDOS(actual_index, count, BankURL.DOS_CREDO);
                     default:
                         break;
                 }
@@ -277,6 +279,26 @@ public class CurrencyParser extends AsyncTask<String, Integer, String[][]> {
             Log.e(TAG, e.getMessage());
         }
 
+        return count;
+    }
+
+    private int parseDOS(int actual_index, int count, String url) {
+        try {
+            document = Jsoup.connect(url).get();
+            Element table = document.select(".b-currency-rates").first();
+            Elements rows = table.select("tbody tr");
+            for (int i = 0; i < 4; i++) {
+                String currency = rows.get(i).select("th").first().text();
+                Elements cells = rows.get(i).select("td");
+                String buy = cells.get(0).text();
+                String sell = cells.get(1).text();
+                currencyTable[actual_index][i] = context.getResources().getString(R.string.dos_credo) + ";" + currency + ";" + buy + ";" + sell;
+                count = 1;
+            }
+
+        } catch (Exception e) {
+            Log.e(TAG, e.getMessage());
+        }
         return count;
     }
 }

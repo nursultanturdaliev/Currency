@@ -16,8 +16,9 @@ public class BankURL {
     public static final String RSK = "http://www.rsk.kg/";
     public static final String CBK = "http://www.cbk.kg/";
     public static final String FKB = "http://www.fkb.kg/";
+    public static final String DOS_CREDO = "http://www.doscredobank.kg/";
 
     public static String[] getArrayURL() {
-        return new String[]{NBKR, DEMIR, ECO, CBK, OPTIMA, ROSIN, KICB, BTA, AYIL, RSK, FKB};
+        return new String[]{NBKR, DEMIR, ECO, CBK, OPTIMA, ROSIN, KICB, BTA, AYIL, RSK, FKB, DOS_CREDO};
     }
 }
