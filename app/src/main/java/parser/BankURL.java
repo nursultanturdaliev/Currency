@@ -14,8 +14,9 @@ public class BankURL {
     public static final String BTA = "http://www.btabank.kg/en/";
     public static final String AYIL = "http://www.ab.kg/";
     public static final String RSK = "http://www.rsk.kg/";
+    public static final String CBK = "http://www.cbk.kg/";
 
     public static String[] getArrayURL() {
-        return new String[]{NBKR, DEMIR, ECO, OPTIMA, ROSIN, KICB, BTA, AYIL, RSK};
+        return new String[]{NBKR, DEMIR, ECO, CBK, OPTIMA, ROSIN, KICB, BTA, AYIL, RSK};
     }
 }

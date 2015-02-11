@@ -73,6 +73,8 @@ public class CurrencyParser extends AsyncTask<String, Integer, String[][]> {
                         break;
                     case BankURL.RSK:
                         count = parseRSK(actual_index, count, BankURL.RSK);
+                    case BankURL.CBK:
+                        count = parseCBK(actual_index, count, BankURL.CBK);
                     default:
                         break;
                 }
@@ -224,6 +226,33 @@ public class CurrencyParser extends AsyncTask<String, Integer, String[][]> {
             }
         } catch (Exception e) {
             Log.e(TAG, "Can't connect to RSK: " + e.getMessage());
+        }
+        return count;
+    }
+
+    private int parseCBK(int actual_index, int count, String url) {
+        try {
+            document = Jsoup.connect(url).get();
+            Element table = document.select("#rates-table .table tbody").first();
+
+            //USD
+            Element cellUSD = table.select(".usd").first();
+            currencyTable[actual_index][0] = context.getResources().getString(R.string.cbk) + ";" + Currency.USD + ";" + cellUSD.select(".buy").text() + ";" + cellUSD.select(".sell").text();
+
+            //EUR
+            Element cellEUR = table.select(".euro").first();
+            currencyTable[actual_index][1] = context.getResources().getString(R.string.cbk) + ";" + Currency.EUR + ";" + cellEUR.select(".buy").text() + ";" + cellEUR.select(".sell").text();
+
+            //RUB
+            Element cellRUB = table.select(".rub").first();
+            currencyTable[actual_index][2] = context.getResources().getString(R.string.cbk) + ";" + Currency.RUB + ";" + cellRUB.select(".buy").text() + ";" + cellRUB.select(".sell").text();
+
+            //KZT
+            Element cellKZT = table.select(".kzt").first();
+            currencyTable[actual_index][3] = context.getResources().getString(R.string.cbk) + ";" + Currency.KZT + ";" + cellKZT.select(".buy").text() + ";" + cellKZT.select(".sell").text();
+
+        } catch (Exception e) {
+            Log.e(TAG, e.getMessage());
         }
         return count;
     }
