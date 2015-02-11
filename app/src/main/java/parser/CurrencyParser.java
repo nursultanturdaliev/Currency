@@ -73,8 +73,13 @@ public class CurrencyParser extends AsyncTask<String, Integer, String[][]> {
                         break;
                     case BankURL.RSK:
                         count = parseRSK(actual_index, count, BankURL.RSK);
+                        break;
                     case BankURL.CBK:
                         count = parseCBK(actual_index, count, BankURL.CBK);
+                        break;
+                    case BankURL.FKB:
+                        count = parseFKB(actual_index, count, BankURL.FKB);
+                        break;
                     default:
                         break;
                 }
@@ -250,10 +255,28 @@ public class CurrencyParser extends AsyncTask<String, Integer, String[][]> {
             //KZT
             Element cellKZT = table.select(".kzt").first();
             currencyTable[actual_index][3] = context.getResources().getString(R.string.cbk) + ";" + Currency.KZT + ";" + cellKZT.select(".buy").text() + ";" + cellKZT.select(".sell").text();
+            count = 1;
 
         } catch (Exception e) {
             Log.e(TAG, e.getMessage());
         }
+        return count;
+    }
+
+    private int parseFKB(int actual_index, int count, String url) {
+        try {
+            document = Jsoup.connect(url).get();
+            Elements rows = document.select(".curency tbody tr");
+            rows.removeAll(rows.select("img"));
+            for (int i = 1; i < 5; i++) {
+                Elements cells = rows.get(i).select("td");
+                currencyTable[actual_index][i - 1] = context.getResources().getString(R.string.fkb) + ";" + cells.get(0).select("span").first().text() + ";" + cells.get(1).text().trim() + ";" + cells.get(2).text().trim();
+                count = 1;
+            }
+        } catch (Exception e) {
+            Log.e(TAG, e.getMessage());
+        }
+
         return count;
     }
 }
