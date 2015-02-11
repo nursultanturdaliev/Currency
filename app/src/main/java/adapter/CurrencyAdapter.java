@@ -35,13 +35,15 @@ public class CurrencyAdapter extends ArrayAdapter {
         TextView sell = (TextView) rowView.findViewById(R.id.textViewSell);
 
         for (int index = 0; index < CurrencyParser.currencyTable[position].length; index++) {
-            String[] str = CurrencyParser.currencyTable[position][index].split(";");
-            if (str[1].equals(currencyType)) {
-                title.setText(str[0]);
-                buy.setText(str[2]);
-                sell.setText(str[3]);
-            }
+            if (CurrencyParser.currencyTable[position][index] != null) {
+                String[] str = CurrencyParser.currencyTable[position][index].split(";");
+                if (str[1].equals(currencyType)) {
+                    title.setText(str[0]);
+                    buy.setText(str[2]);
+                    sell.setText(str[3]);
+                }
 
+            }
         }
 
 

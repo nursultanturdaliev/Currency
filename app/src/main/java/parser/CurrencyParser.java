@@ -71,6 +71,8 @@ public class CurrencyParser extends AsyncTask<String, Integer, String[][]> {
                     case BankURL.AYIL:
                         count = parseAYIL(actual_index, count, BankURL.AYIL);
                         break;
+                    case BankURL.RSK:
+                        count = parseRSK(actual_index, count, BankURL.RSK);
                     default:
                         break;
                 }
@@ -206,6 +208,22 @@ public class CurrencyParser extends AsyncTask<String, Integer, String[][]> {
             else
                 currencyTable[actual_index][i - 1] = context.getResources().getString(R.string.ayil) + ";" + cells.get(0).text() + ";" + cells.get(1).text() + ";" + cells.get(2).text();
             count = 1;
+        }
+        return count;
+    }
+
+    private int parseRSK(int actual_index, int count, String url) {
+        try {
+            document = Jsoup.connect(url).get();
+            Element table = document.select(".course-list").first();
+            Elements rows = table.select(".item");
+            for (int i = 0; i < 4; i++) {
+                Elements cells = rows.get(i).select("div");
+                currencyTable[actual_index][i] = context.getResources().getString(R.string.rsk) + ";" + cells.get(1).text() + ";" + cells.get(2).text() + ";" + cells.get(3).text();
+                count = 1;
+            }
+        } catch (Exception e) {
+            Log.e(TAG, "Can't connect to RSK: " + e.getMessage());
         }
         return count;
     }
