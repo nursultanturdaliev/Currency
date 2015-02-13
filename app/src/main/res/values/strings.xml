@@ -14,15 +14,18 @@
     <string name="action_update">update</string>
     <string name="update">Update</string>
     <string name="nbkr">NBKR</string>
-    <string name="eco">Ecoislamic</string>
+    <string name="eco">Ecoislamic Bank</string>
     <string name="demir">DemirBank</string>
     <string name="optima">Optima</string>
     <string name="rosin">Rosinbank</string>
-    <string name="kicb">KICB</string>
-    <string name="bta">BTA</string>
-    <string name="ayil">AYIL</string>
-    <string name="rsk">RSK</string>
+    <string name="kicb">KICB Bank</string>
+    <string name="bta">BTA Bank</string>
+    <string name="ayil">Ayil Bank</string>
+    <string name="rsk">RSK Bank</string>
     <string name="cbk">Commerce Bank</string>
-    <string name="fkb">Finance Credit Bank</string>
+    <string name="fkb">Finance CreditBank</string>
     <string name="dos_credo">Dos Credo Bank</string>
+    <string name="progress_title">Please wait</string>
+    <string name="progress_message_even">Updating currencies..</string>
+    <string name="progress_message_odd">Updating currencies...</string>
 </resources>

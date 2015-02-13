@@ -19,6 +19,6 @@ public class BankURL {
     public static final String DOS_CREDO = "http://www.doscredobank.kg/";
 
     public static String[] getArrayURL() {
-        return new String[]{NBKR, DEMIR, ECO, CBK, OPTIMA, ROSIN, KICB, BTA, AYIL, RSK, FKB, DOS_CREDO};
+        return new String[]{/*AYIL,*/ BTA, CBK, DEMIR, DOS_CREDO, ECO, FKB, KICB, NBKR, /*OPTIMA,*/ ROSIN, RSK,};
     }
 }

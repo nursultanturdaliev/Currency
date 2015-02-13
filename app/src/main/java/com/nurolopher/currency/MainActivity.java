@@ -4,11 +4,11 @@ package com.nurolopher.currency;
 import android.app.ActionBar;
 import android.app.FragmentTransaction;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.ListFragment;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.Menu;
@@ -16,28 +16,30 @@ import android.view.MenuItem;
 import android.view.ViewConfiguration;
 
 import java.lang.reflect.Field;
-import java.util.ArrayList;
 
 import adapter.TabsPagerAdapter;
 import parser.BankURL;
+import parser.Currency;
 import parser.CurrencyParser;
+import parser.StringHelper;
 
 
 public class MainActivity extends FragmentActivity implements ActionBar.TabListener {
 
     private static final String TAG = "MainActivity";
+    public static final String SHARED_PREFS_CURRENCY = "SHARED_PREFS_CURRENCY";
+    public static final String currencyPrefTag = "currency_table";
+
     public static ViewPager viewPager;
     private android.app.ActionBar actionBar;
     public static TabsPagerAdapter tabsPagerAdapter;
-    public static ArrayList<ListFragment> fragments = new ArrayList<>();
+
     public static ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        progressDialog = new ProgressDialog(this);
         getOverflowMenu();
 
         viewPager = (ViewPager) findViewById(R.id.pager);
@@ -53,11 +55,17 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
         actionBar.setHomeButtonEnabled(false);
 
         viewPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
+
             @Override
             public void onPageSelected(int position) {
                 actionBar.setSelectedNavigationItem(position);
             }
         });
+
+        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS_CURRENCY, 0);
+        String currencyInString = sharedPreferences.getString(currencyPrefTag, "");
+
+        CurrencyParser.currencyTable = StringHelper.unMergeString(currencyInString);
 
         CurrencyParser currencyParser = new CurrencyParser(this);
         currencyParser.execute(BankURL.getArrayURL());
@@ -67,6 +75,11 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
     protected void onStop() {
         super.onStop();
         MainActivity.progressDialog.dismiss();
+
+        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS_CURRENCY, 0);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(currencyPrefTag, StringHelper.mergeDoubleStringArray(CurrencyParser.currencyTable));
+        editor.commit();
     }
 
 
@@ -84,6 +97,10 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
                 Intent intent = new Intent(this, AboutActivity.class);
                 startActivity(intent);
                 break;
+            case R.id.action_update:
+                CurrencyParser.currencyTable = new String[][]{};
+                CurrencyParser currencyParser = new CurrencyParser(this);
+                currencyParser.execute(BankURL.getArrayURL());
             default:
                 super.onOptionsItemSelected(item);
         }
@@ -117,5 +134,27 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
         } catch (Exception e) {
             Log.i(TAG, e.getMessage());
         }
+    }
+
+    public static void startProgressBar(Context context) {
+        progressDialog = new ProgressDialog(context);
+        progressDialog.setIndeterminate(false);
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+        progressDialog.setTitle(context.getString(R.string.progress_title));
+        progressDialog.setMessage(context.getString(R.string.progress_message_even));
+        progressDialog.setProgress(0);
+        progressDialog.setMax(BankURL.getArrayURL().length);
+        progressDialog.setCanceledOnTouchOutside(false);
+        progressDialog.show();
+
+    }
+
+    public static void toggleProgressBarMessage(Context context, int value) {
+        if (value % 2 == 1) {
+            MainActivity.progressDialog.setMessage(context.getResources().getString(R.string.progress_message_even));
+        } else {
+            MainActivity.progressDialog.setMessage(context.getResources().getString(R.string.progress_message_odd));
+        }
+
     }
 }

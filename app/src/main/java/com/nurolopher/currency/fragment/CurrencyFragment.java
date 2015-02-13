@@ -5,8 +5,6 @@ import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.util.Log;
 
-import com.nurolopher.currency.MainActivity;
-
 import adapter.CurrencyAdapter;
 
 import com.nurolopher.currency.R;
@@ -41,7 +39,11 @@ public class CurrencyFragment extends ListFragment {
         }
         CurrencyAdapter currencyAdapter = new CurrencyAdapter(getActivity(), R.layout.fragment_currency, currencyType);
         setListAdapter(currencyAdapter);
+    }
 
+    @Override
+    public void onStart() {
+        super.onStart();
 
     }
 
@@ -49,8 +51,8 @@ public class CurrencyFragment extends ListFragment {
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        MainActivity.fragments.add(this);
-        Log.i(TAG, "Fragment added:" + this.currencyType);
+        //MainActivity.fragments.add(this);
+        //Log.i(TAG, "Fragment added:" + this.currencyType);
     }
 
     @Override
