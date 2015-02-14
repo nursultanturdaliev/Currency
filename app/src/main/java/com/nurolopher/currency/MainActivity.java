@@ -112,8 +112,10 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
                 CurrencyParser.currencyTable = new String[][]{};
                 CurrencyParser currencyParser = new CurrencyParser(this);
                 currencyParser.execute(BankURL.getArrayURL());
+                break;
             case R.id.action_last_updated:
                 MainActivity.showUpdateToast(getApplicationContext());
+                break;
             default:
                 super.onOptionsItemSelected(item);
         }
