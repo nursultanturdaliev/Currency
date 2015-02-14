@@ -1,4 +1,4 @@
-package parser;
+package helpers;
 
 /**
  * Created by nursultan on 12-Feb 15.

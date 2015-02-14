@@ -28,4 +28,5 @@
     <string name="progress_title">Please wait</string>
     <string name="progress_message_even">Updating currencies..</string>
     <string name="progress_message_odd">Updating currencies...</string>
+    <string name="last_updated">last updated</string>
 </resources>

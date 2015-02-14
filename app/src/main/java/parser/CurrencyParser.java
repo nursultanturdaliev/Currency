@@ -1,6 +1,5 @@
 package parser;
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
@@ -84,6 +83,9 @@ public class CurrencyParser extends AsyncTask<String, Integer, String[][]> {
                 actual_index += count;
                 publishProgress(index);
             }
+
+            MainActivity.setUpdateTime(context);
+
             return currencyTable;
         } else {
             return CurrencyParser.currencyTable;
@@ -108,6 +110,7 @@ public class CurrencyParser extends AsyncTask<String, Integer, String[][]> {
 
         MainActivity.tabsPagerAdapter = new TabsPagerAdapter(((MainActivity) context).getSupportFragmentManager());
         MainActivity.viewPager.setAdapter(MainActivity.tabsPagerAdapter);
+        MainActivity.showUpdateToast(context);
     }
 
     @Override
