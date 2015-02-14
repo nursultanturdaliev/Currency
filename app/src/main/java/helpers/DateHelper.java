@@ -1,5 +1,7 @@
 package helpers;
 
+import android.util.Log;
+
 import com.nurolopher.currency.R;
 
 import java.text.DateFormat;
@@ -12,13 +14,18 @@ import java.util.Date;
  */
 public class DateHelper {
 
-    public static String getDateDiff(String lastUpdateDateStr) {
-        Date lastUpdateDate = new Date();
+    private static final String TAG = "date_helper";
+
+    public static long[] getDateDiff(String lastUpdateDateStr) {
+        long[] dateDiff = new long[5];
+        Date lastUpdateDate;
         DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+
         try {
             lastUpdateDate = dateFormat.parse(lastUpdateDateStr);
         } catch (ParseException e) {
-            e.printStackTrace();
+            lastUpdateDate = new Date();
+            Log.e(TAG, "Error on DateHelper");
         }
         Date currentDate = new Date();
 
@@ -27,30 +34,19 @@ public class DateHelper {
         long minutes = seconds / 60;
         long hours = minutes / 60;
         long days = hours / 24;
-        String defaultText = "Currencies has been successfully updated";
-        StringBuilder toastMessage = new StringBuilder();
+
 
         seconds = seconds - minutes * 60;
         minutes = minutes - hours * 60;
         hours = hours - days * 24;
-        if (days > 0) {
-            toastMessage.append(days + " days");
-        }
-        if (hours > 0) {
-            toastMessage.append(hours + " hours ");
-        }
-        if (minutes > 0) {
-            toastMessage.append(minutes + " minutes ");
-        }
-        if (seconds > 0) {
-            toastMessage.append(seconds + " seconds ago");
 
-        }
-        if (timeDiff / 1000 > 0) {
-            defaultText = "Last updated ";
-        }
-        toastMessage.insert(0, defaultText);
-        return toastMessage.toString();
+        dateDiff[0] = days;
+        dateDiff[1] = hours;
+        dateDiff[2] = minutes;
+        dateDiff[3] = seconds;
+        dateDiff[4] = timeDiff;
+
+        return dateDiff;
 
     }
 }

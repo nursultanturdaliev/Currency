@@ -144,7 +144,6 @@ public class CurrencyParser extends AsyncTask<String, Integer, String[][]> {
             document = Jsoup.parse(Jsoup.connect(url).get().body().toString(), url, Parser.xmlParser());
             rows = document.select("Currency");
             for (int i = 0; i < rows.size(); i++) {
-                // TODO: Not buy and sell but. on two dates should be displayed
                 currencyTable[actual_index][i] = context.getResources().getString(R.string.nbkr) + ";" + rows.get(i).attr("isocode").trim() + ";" + rows.get(i).select("Value").get(0).text() + ";" + rows.get(i).select("Value").get(0).text();
                 count = 1;
             }

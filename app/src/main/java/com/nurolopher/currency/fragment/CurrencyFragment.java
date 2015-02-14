@@ -41,23 +41,4 @@ public class CurrencyFragment extends ListFragment {
         setListAdapter(currencyAdapter);
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-
-    }
-
-
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        //MainActivity.fragments.add(this);
-        //Log.i(TAG, "Fragment added:" + this.currencyType);
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-    }
-
 }

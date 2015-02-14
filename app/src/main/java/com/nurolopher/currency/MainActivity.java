@@ -181,8 +181,35 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 
         SharedPreferences sharedPreferences = context.getSharedPreferences(SHARED_PREFS_CURRENCY, 0);
         String lastUpdateDateStr = sharedPreferences.getString(datePrefTag, "");
-        String dateDiff = DateHelper.getDateDiff(lastUpdateDateStr);
-        Toast.makeText(context.getApplicationContext(), dateDiff.toString(), Toast.LENGTH_LONG).show();
+        long[] dateDiff = DateHelper.getDateDiff(lastUpdateDateStr);
+
+        String defaultText = context.getString(R.string.default_text);
+        StringBuilder toastMessage = new StringBuilder();
+
+        long days = dateDiff[0];
+        long hours = dateDiff[1];
+        long minutes = dateDiff[2];
+        long seconds = dateDiff[3];
+        long timeDiff = dateDiff[4];
+
+        if (days > 0) {
+            toastMessage.append(days + " " + context.getString(R.string.days));
+        }
+        if (hours > 0) {
+            toastMessage.append(hours + " " + context.getString(R.string.hours) + " ");
+        }
+        if (minutes > 0) {
+            toastMessage.append(minutes + " " + context.getString(R.string.minutes) + " ");
+        }
+        if (seconds > 0) {
+            toastMessage.append(seconds + " " + context.getString(R.string.seconds_ago));
+
+        }
+        if (timeDiff / 1000 > 0) {
+            defaultText = context.getString(R.string.last_updated) + " ";
+        }
+        toastMessage.insert(0, defaultText);
+        Toast.makeText(context.getApplicationContext(), toastMessage.toString(), Toast.LENGTH_LONG).show();
 
     }
 }
