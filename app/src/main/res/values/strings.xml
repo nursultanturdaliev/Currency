@@ -10,7 +10,6 @@
         <item>RUB</item>
         <item>KZT</item>
     </string-array>
-    <string name="title_activity_about">About</string>
     <string name="action_update">update</string>
     <string name="update">Update</string>
     <string name="nbkr">NBKR</string>
@@ -28,5 +27,5 @@
     <string name="progress_title">Please wait</string>
     <string name="progress_message_even">Updating currencies..</string>
     <string name="progress_message_odd">Updating currencies...</string>
-    <string name="last_updated">last updated</string>
+    <string name="last_updated">"Last updated "</string>
 </resources>

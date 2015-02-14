@@ -6,6 +6,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
@@ -43,7 +44,9 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         setContentView(R.layout.activity_main);
+
         getOverflowMenu();
 
         viewPager = (ViewPager) findViewById(R.id.pager);
@@ -76,13 +79,6 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
     }
 
     @Override
-    protected void onResumeFragments() {
-        super.onResumeFragments();
-
-        //showUpdateToast(getApplicationContext());
-    }
-
-    @Override
     protected void onStop() {
         super.onStop();
         MainActivity.progressDialog.dismiss();
@@ -104,10 +100,6 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         switch (id) {
-            case R.id.action_about:
-                Intent intent = new Intent(this, AboutActivity.class);
-                startActivity(intent);
-                break;
             case R.id.action_update:
                 CurrencyParser.currencyTable = new String[][]{};
                 CurrencyParser currencyParser = new CurrencyParser(this);

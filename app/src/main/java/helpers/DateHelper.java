@@ -1,5 +1,7 @@
 package helpers;
 
+import com.nurolopher.currency.R;
+
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
