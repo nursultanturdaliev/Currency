@@ -4,7 +4,6 @@ import android.app.ActionBar;
 import android.app.FragmentTransaction;
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
@@ -23,6 +22,7 @@ import java.util.Calendar;
 
 import adapter.TabsPagerAdapter;
 import parser.BankURL;
+import parser.Currency;
 import parser.CurrencyParser;
 import helpers.DateHelper;
 import helpers.StringHelper;
@@ -72,7 +72,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS_CURRENCY, 0);
         String currencyInString = sharedPreferences.getString(currencyPrefTag, "");
 
-        CurrencyParser.currencyTable = StringHelper.unMergeString(currencyInString);
+        Currency.currencyTable = StringHelper.unMergeString(currencyInString);
 
         CurrencyParser currencyParser = new CurrencyParser(this);
         currencyParser.execute(BankURL.getArrayURL());
@@ -85,7 +85,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS_CURRENCY, 0);
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString(currencyPrefTag, StringHelper.mergeDoubleStringArray(CurrencyParser.currencyTable));
+        editor.putString(currencyPrefTag, StringHelper.mergeDoubleStringArray(Currency.currencyTable));
         editor.commit();
     }
 
@@ -101,7 +101,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
         int id = item.getItemId();
         switch (id) {
             case R.id.action_update:
-                CurrencyParser.currencyTable = new String[][]{};
+                Currency.currencyTable = new String[][]{};
                 CurrencyParser currencyParser = new CurrencyParser(this);
                 currencyParser.execute(BankURL.getArrayURL());
                 break;

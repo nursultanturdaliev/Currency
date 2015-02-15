@@ -23,7 +23,6 @@ public class CurrencyParser extends AsyncTask<String, Integer, String[][]> {
     private Context context;
     private Document document;
     private Elements rows;
-    public static String[][] currencyTable;
 
     public CurrencyParser(Context context) {
         this.context = context;
@@ -31,8 +30,8 @@ public class CurrencyParser extends AsyncTask<String, Integer, String[][]> {
 
     @Override
     protected String[][] doInBackground(String... urls) {
-        if (CurrencyParser.currencyTable.length == 0) {
-            currencyTable = new String[urls.length][4];
+        if (Currency.currencyTable.length == 0) {
+            Currency.currencyTable = new String[urls.length][4];
             int actual_index = 0;
             int count;
             for (int index = 0; index < urls.length; index++) {
@@ -85,10 +84,9 @@ public class CurrencyParser extends AsyncTask<String, Integer, String[][]> {
             }
 
             MainActivity.setUpdateTime(context);
-
-            return currencyTable;
+            return Currency.currencyTable;
         } else {
-            return CurrencyParser.currencyTable;
+            return Currency.currencyTable;
         }
 
     }
@@ -104,7 +102,7 @@ public class CurrencyParser extends AsyncTask<String, Integer, String[][]> {
     protected void onPostExecute(String[][] currencies) {
         super.onPostExecute(currencies);
 
-        currencyTable = currencies;
+        Currency.currencyTable = currencies;
         MainActivity.progressDialog.cancel();
 
 
@@ -128,7 +126,7 @@ public class CurrencyParser extends AsyncTask<String, Integer, String[][]> {
             for (int i = 1; i < 5; i++) {
                 Elements rowCells = rows.get(i).select("td");
                 if (rowCells.size() > 0) {
-                    currencyTable[actual_index][i - 1] = context.getResources().getString(R.string.demir) + ";" + rowCells.get(0).select("strong").get(0).text().trim() + ";" + rowCells.get(1).text() + ";" + rowCells.get(2).text();
+                    Currency.currencyTable[actual_index][i - 1] = context.getResources().getString(R.string.demir) + ";" + rowCells.get(0).select("strong").get(0).text().trim() + ";" + rowCells.get(1).text() + ";" + rowCells.get(2).text();
                     count = 1;
                 }
             }
@@ -144,7 +142,7 @@ public class CurrencyParser extends AsyncTask<String, Integer, String[][]> {
             document = Jsoup.parse(Jsoup.connect(url).get().body().toString(), url, Parser.xmlParser());
             rows = document.select("Currency");
             for (int i = 0; i < rows.size(); i++) {
-                currencyTable[actual_index][i] = context.getResources().getString(R.string.nbkr) + ";" + rows.get(i).attr("isocode").trim() + ";" + rows.get(i).select("Value").get(0).text() + ";" + rows.get(i).select("Value").get(0).text();
+                Currency.currencyTable[actual_index][i] = context.getResources().getString(R.string.nbkr) + ";" + rows.get(i).attr("isocode").trim() + ";" + rows.get(i).select("Value").get(0).text() + ";" + rows.get(i).select("Value").get(0).text();
                 count = 1;
             }
         } catch (Exception e) {
@@ -161,7 +159,7 @@ public class CurrencyParser extends AsyncTask<String, Integer, String[][]> {
             for (int i = 1; i < rows.size(); i++) {
                 Elements rowCells = rows.get(i).getElementsByClass("cell");
                 if (rowCells.size() > 0) {
-                    currencyTable[actual_index][i - 1] = context.getResources().getString(R.string.eco) + ";" + rowCells.get(0).text().trim() + ";" + rowCells.get(1).text() + ";" + rowCells.get(2).text();
+                    Currency.currencyTable[actual_index][i - 1] = context.getResources().getString(R.string.eco) + ";" + rowCells.get(0).text().trim() + ";" + rowCells.get(1).text() + ";" + rowCells.get(2).text();
                     count = 1;
                 }
             }
@@ -179,7 +177,7 @@ public class CurrencyParser extends AsyncTask<String, Integer, String[][]> {
             Elements rows = table.select("tr");
             for (int i = 2; i < 6; i++) {
                 Elements cell = rows.get(i).select("td span");
-                currencyTable[actual_index][i - 2] = context.getResources().getString(R.string.optima) + ";" + Currency.getCurrencyArrayAt(i - 2) + ";" + cell.get(0).text() + ";" + cell.get(1).text();
+                Currency.currencyTable[actual_index][i - 2] = context.getResources().getString(R.string.optima) + ";" + Currency.getCurrencyArrayAt(i - 2) + ";" + cell.get(0).text() + ";" + cell.get(1).text();
                 count = 1;
             }
         } catch (Exception e) {
@@ -196,7 +194,7 @@ public class CurrencyParser extends AsyncTask<String, Integer, String[][]> {
             Elements rows = table.select("tbody tr");
             for (int i = 0; i < 4; i++) {
                 Elements cells = rows.get(i).select("td");
-                currencyTable[actual_index][i] = context.getResources().getString(R.string.rosin) + ";" + cells.get(0).select("div").first().text().trim() + ";" + cells.get(1).text() + ";" + cells.get(2).text();
+                Currency.currencyTable[actual_index][i] = context.getResources().getString(R.string.rosin) + ";" + cells.get(0).select("div").first().text().trim() + ";" + cells.get(1).text() + ";" + cells.get(2).text();
                 count = 1;
             }
         } catch (Exception e) {
@@ -214,7 +212,7 @@ public class CurrencyParser extends AsyncTask<String, Integer, String[][]> {
             rows.remove(rows.select("img"));
             for (int i = 1; i < 5; i++) {
                 Elements cells = rows.get(i).select("span");
-                currencyTable[actual_index][i - 1] = context.getResources().getString(R.string.kicb) + ";" + cells.get(0).text().trim() + ";" + cells.get(1).text() + ";" + cells.get(2).text();
+                Currency.currencyTable[actual_index][i - 1] = context.getResources().getString(R.string.kicb) + ";" + cells.get(0).text().trim() + ";" + cells.get(1).text() + ";" + cells.get(2).text();
                 count = 1;
             }
         } catch (Exception e) {
@@ -230,7 +228,7 @@ public class CurrencyParser extends AsyncTask<String, Integer, String[][]> {
             Elements rows = document.select("table.currency tbody tr");
             for (int i = 2; i < 6; i++) {
                 Elements cells = rows.get(i).select("td");
-                currencyTable[actual_index][i - 2] = context.getResources().getString(R.string.bta) + ";" + cells.get(0).text().trim() + ";" + cells.get(1).text() + ";" + cells.get(2).text();
+                Currency.currencyTable[actual_index][i - 2] = context.getResources().getString(R.string.bta) + ";" + cells.get(0).text().trim() + ";" + cells.get(1).text() + ";" + cells.get(2).text();
                 count = 1;
             }
         } catch (Exception e) {
@@ -247,9 +245,9 @@ public class CurrencyParser extends AsyncTask<String, Integer, String[][]> {
             for (int i = 1; i < rows.size(); i++) {
                 Elements cells = rows.get(i).select("td");
                 if (i == 4)
-                    currencyTable[actual_index][i - 1] = context.getResources().getString(R.string.ayil) + ";USD;" + cells.get(1).text() + ";" + cells.get(2).text();
+                    Currency.currencyTable[actual_index][i - 1] = context.getResources().getString(R.string.ayil) + ";USD;" + cells.get(1).text() + ";" + cells.get(2).text();
                 else
-                    currencyTable[actual_index][i - 1] = context.getResources().getString(R.string.ayil) + ";" + cells.get(0).text() + ";" + cells.get(1).text() + ";" + cells.get(2).text();
+                    Currency.currencyTable[actual_index][i - 1] = context.getResources().getString(R.string.ayil) + ";" + cells.get(0).text() + ";" + cells.get(1).text() + ";" + cells.get(2).text();
                 count = 1;
             }
         } catch (Exception e) {
@@ -266,7 +264,7 @@ public class CurrencyParser extends AsyncTask<String, Integer, String[][]> {
             Elements rows = table.select(".item");
             for (int i = 0; i < 4; i++) {
                 Elements cells = rows.get(i).select("div");
-                currencyTable[actual_index][i] = context.getResources().getString(R.string.rsk) + ";" + cells.get(1).text() + ";" + cells.get(2).text() + ";" + cells.get(3).text();
+                Currency.currencyTable[actual_index][i] = context.getResources().getString(R.string.rsk) + ";" + cells.get(1).text() + ";" + cells.get(2).text() + ";" + cells.get(3).text();
                 count = 1;
             }
         } catch (Exception e) {
@@ -282,19 +280,19 @@ public class CurrencyParser extends AsyncTask<String, Integer, String[][]> {
 
             //USD
             Element cellUSD = table.select(".usd").first();
-            currencyTable[actual_index][0] = context.getResources().getString(R.string.cbk) + ";" + Currency.USD + ";" + cellUSD.select(".buy").text() + ";" + cellUSD.select(".sell").text();
+            Currency.currencyTable[actual_index][0] = context.getResources().getString(R.string.cbk) + ";" + Currency.USD + ";" + cellUSD.select(".buy").text() + ";" + cellUSD.select(".sell").text();
 
             //EUR
             Element cellEUR = table.select(".euro").first();
-            currencyTable[actual_index][1] = context.getResources().getString(R.string.cbk) + ";" + Currency.EUR + ";" + cellEUR.select(".buy").text() + ";" + cellEUR.select(".sell").text();
+            Currency.currencyTable[actual_index][1] = context.getResources().getString(R.string.cbk) + ";" + Currency.EUR + ";" + cellEUR.select(".buy").text() + ";" + cellEUR.select(".sell").text();
 
             //RUB
             Element cellRUB = table.select(".rub").first();
-            currencyTable[actual_index][2] = context.getResources().getString(R.string.cbk) + ";" + Currency.RUB + ";" + cellRUB.select(".buy").text() + ";" + cellRUB.select(".sell").text();
+            Currency.currencyTable[actual_index][2] = context.getResources().getString(R.string.cbk) + ";" + Currency.RUB + ";" + cellRUB.select(".buy").text() + ";" + cellRUB.select(".sell").text();
 
             //KZT
             Element cellKZT = table.select(".kzt").first();
-            currencyTable[actual_index][3] = context.getResources().getString(R.string.cbk) + ";" + Currency.KZT + ";" + cellKZT.select(".buy").text() + ";" + cellKZT.select(".sell").text();
+            Currency.currencyTable[actual_index][3] = context.getResources().getString(R.string.cbk) + ";" + Currency.KZT + ";" + cellKZT.select(".buy").text() + ";" + cellKZT.select(".sell").text();
             count = 1;
 
         } catch (Exception e) {
@@ -310,7 +308,7 @@ public class CurrencyParser extends AsyncTask<String, Integer, String[][]> {
             rows.removeAll(rows.select("img"));
             for (int i = 1; i < 5; i++) {
                 Elements cells = rows.get(i).select("td");
-                currencyTable[actual_index][i - 1] = context.getResources().getString(R.string.fkb) + ";" + cells.get(0).select("span").first().text() + ";" + cells.get(1).text().trim() + ";" + cells.get(2).text().trim();
+                Currency.currencyTable[actual_index][i - 1] = context.getResources().getString(R.string.fkb) + ";" + cells.get(0).select("span").first().text() + ";" + cells.get(1).text().trim() + ";" + cells.get(2).text().trim();
                 count = 1;
             }
         } catch (Exception e) {
@@ -330,7 +328,7 @@ public class CurrencyParser extends AsyncTask<String, Integer, String[][]> {
                 Elements cells = rows.get(i).select("td");
                 String buy = cells.get(0).text();
                 String sell = cells.get(1).text();
-                currencyTable[actual_index][i] = context.getResources().getString(R.string.dos_credo) + ";" + currency + ";" + buy + ";" + sell;
+                Currency.currencyTable[actual_index][i] = context.getResources().getString(R.string.dos_credo) + ";" + currency + ";" + buy + ";" + sell;
                 count = 1;
             }
 
