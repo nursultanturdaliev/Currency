@@ -61,7 +61,5 @@
             android:id="@+id/edtTxtTo"
             android:layout_row="1"
             android:layout_column="2" />
-        android:clickable="false"
-
     </GridLayout>
 </RelativeLayout>

@@ -1,23 +1,20 @@
 package com.nurolopher.currency.fragment;
 
 import android.app.Dialog;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.nurolopher.currency.R;
+
 import adapter.CurrencyAdapter;
 import parser.Currency;
-
-import com.nurolopher.currency.R;
 
 
 public class CurrencyFragment extends ListFragment {
@@ -52,15 +49,19 @@ public class CurrencyFragment extends ListFragment {
             final String fromCurrency = bankParams[1];
             String toCurrency = Currency.SOM;
 
+
+            //dialog
             final Dialog dialog = new Dialog(getActivity());
             dialog.setContentView(R.layout.converter_dialog);
             dialog.setTitle("Converter");
 
+            //currency titles
             final TextView txtCurrencyLeft = (TextView) dialog.findViewById(R.id.txtCurrencyLeft);
             final TextView txtCurrencyRight = (TextView) dialog.findViewById(R.id.txtCurrencyRight);
             txtCurrencyLeft.setText(fromCurrency);
             txtCurrencyRight.setText(toCurrency);
 
+            //currencies
             final EditText edtTxtFrom = (EditText) dialog.findViewById(R.id.edtTxtFrom);
             final EditText edtTxtTo = (EditText) dialog.findViewById(R.id.edtTxtTo);
 
@@ -96,6 +97,7 @@ public class CurrencyFragment extends ListFragment {
             });
 
 
+            // Image currency toggle
             ImageButton imgBtnToggle = (ImageButton) dialog.findViewById(R.id.imgBtnToggle);
             imgBtnToggle.setOnClickListener(new View.OnClickListener() {
                 @Override
