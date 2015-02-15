@@ -8,6 +8,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
@@ -46,8 +47,8 @@ public class CurrencyFragment extends ListFragment {
         int columnIndex = Currency.getCurrencyCell(position, currencyType);
         if (columnIndex > -1) {
             String[] bankParams = Currency.currencyTable[position][columnIndex].split(";");
-            final double buy = Double.parseDouble(bankParams[2]);
-            final double sell = Double.parseDouble(bankParams[3]);
+            final double buy = Double.parseDouble(bankParams[2].replace(',', '.'));
+            final double sell = Double.parseDouble(bankParams[3].replace(',', '.'));
             final String fromCurrency = bankParams[1];
             String toCurrency = Currency.SOM;
 
@@ -62,6 +63,11 @@ public class CurrencyFragment extends ListFragment {
 
             final EditText edtTxtFrom = (EditText) dialog.findViewById(R.id.edtTxtFrom);
             final EditText edtTxtTo = (EditText) dialog.findViewById(R.id.edtTxtTo);
+
+            edtTxtTo.setFocusable(false);
+            edtTxtTo.setClickable(false);
+            edtTxtTo.setFocusableInTouchMode(false);
+
             edtTxtFrom.addTextChangedListener(new TextWatcher() {
                 @Override
                 public void beforeTextChanged(CharSequence s, int start, int count, int after) {

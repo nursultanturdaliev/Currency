@@ -14,7 +14,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="USD"
+            android:text="@string/usd"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:id="@+id/txtCurrencyLeft"
             android:layout_row="0"
@@ -39,12 +39,13 @@
             android:layout_column="1"
             android:layout_rowSpan="2"
             android:background="@drawable/ic_dialog_switch"
-            android:layout_gravity="center" />
+            android:layout_gravity="center"
+            android:contentDescription="@string/toggle" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="SOM"
+            android:text="@string/som"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:id="@+id/txtCurrencyRight"
             android:layout_row="0"
@@ -59,12 +60,8 @@
             android:ems="10"
             android:id="@+id/edtTxtTo"
             android:layout_row="1"
-            android:layout_column="2"
-            android:clickable="false"
-            android:cursorVisible="false"
-            android:textIsSelectable="true"
-            android:focusableInTouchMode="false"
-            android:editable="false" />
+            android:layout_column="2" />
+        android:clickable="false"
 
     </GridLayout>
 </RelativeLayout>

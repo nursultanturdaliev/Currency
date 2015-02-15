@@ -9,17 +9,17 @@
     </string-array>
     <string name="action_update">обновить</string>
     <string name="nbkr">НБКР</string>
-    <string name="eco">ЭкоИсламик Банк</string>
-    <string name="demir">ДемирБанк</string>
-    <string name="optima">Оптима Банк</string>
-    <string name="rosin">РосинБанк</string>
-    <string name="kicb">KICB Банк</string>
-    <string name="bta">БТА Банк</string>
-    <string name="ayil">Айыл Банк</string>
-    <string name="rsk">РСК Банк</string>
-    <string name="cbk">Коммерц Банк</string>
-    <string name="fkb">ФинансКредитБанк</string>
-    <string name="dos_credo">ДосКредоБанк</string>
+    <string name="eco">ЭкоИсламик </string>
+    <string name="demir">Демир</string>
+    <string name="optima">Оптима </string>
+    <string name="rosin">Росин</string>
+    <string name="kicb">KICB </string>
+    <string name="bta">БТА </string>
+    <string name="ayil">Айыл </string>
+    <string name="rsk">РСК </string>
+    <string name="cbk">Коммерческий</string>
+    <string name="fkb">Финанс Кредит</string>
+    <string name="dos_credo">ДосКредо</string>
     <string name="progress_title">Пожалуйста, подождите</string>
     <string name="progress_message_even">Обновление валют..</string>
     <string name="progress_message_odd">Обновление валют...</string>
@@ -30,4 +30,7 @@
     <string name="minutes">минута</string>
     <string name="seconds_ago">секунд назад</string>
     <string name="app_name">Валюта</string>
+    <string name="som">СОМ</string>
+    <string name="toggle">тогл</string>
+    <string name="usd">Доллар</string>
 </resources>
