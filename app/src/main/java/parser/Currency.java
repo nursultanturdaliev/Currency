@@ -1,5 +1,7 @@
 package parser;
 
+import java.util.Arrays;
+
 /**
  * Created by nursultan on 6-Feb 15.
  */
@@ -22,11 +24,22 @@ public class Currency {
     }
 
     public static int getCurrencyCell(int row, String currency) {
-        for (int i = 0; i < 4; i++) {
-            if (currencyTable[row][i].indexOf(currency) > -1) {
-                return i;
+        if (row < Currency.currencyTable.length)
+            for (int i = 0; i < 4; i++) {
+                if (currencyTable[row][i].indexOf(currency) > -1) {
+                    return i;
+                }
+            }
+        return -1;
+    }
+
+    public static void normalizeCurrencyTable() {
+        int count = 0;
+        for (int i = 0; i < currencyTable.length; i++) {
+            if (currencyTable[i][0] != null) {
+                count++;
             }
         }
-        return -1;
+        currencyTable = Arrays.copyOfRange(currencyTable, 0, count);
     }
 }

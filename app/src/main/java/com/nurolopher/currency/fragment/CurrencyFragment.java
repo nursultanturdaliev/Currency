@@ -131,5 +131,4 @@ public class CurrencyFragment extends ListFragment {
         CurrencyAdapter currencyAdapter = new CurrencyAdapter(getActivity(), R.layout.fragment_currency, currencyType);
         setListAdapter(currencyAdapter);
     }
-
 }

@@ -84,12 +84,14 @@ public class CurrencyParser extends AsyncTask<String, Integer, String[][]> {
             }
 
             MainActivity.setUpdateTime(context);
+            Currency.normalizeCurrencyTable();
             return Currency.currencyTable;
         } else {
             return Currency.currencyTable;
         }
 
     }
+
 
     @Override
     protected void onPreExecute() {
