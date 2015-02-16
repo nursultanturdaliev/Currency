@@ -27,12 +27,12 @@
     <string name="progress_message_odd">Updating currencies...</string>
     <string name="last_updated">Last update</string>
     <string name="default_text">Currencies has been successfully updated</string>
-    <string name="days">days</string>
-    <string name="hours">hours</string>
-    <string name="minutes">minutes</string>
-    <string name="seconds_ago">seconds ago</string>
+    <string name="days">day.</string>
+    <string name="hours">hour.</string>
+    <string name="minutes">min.</string>
+    <string name="seconds_ago">sec. ago</string>
     <string name="som">SOM</string>
     <string name="usd">USD</string>
     <string name="toggle">toggle</string>
-    <string name="no_internet">No internet connection. Please, connect to an internet first.</string>
+    <string name="no_internet">No internet connection. Please, connect to an internet.</string>
 </resources>

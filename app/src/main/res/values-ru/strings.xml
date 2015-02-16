@@ -19,18 +19,19 @@
     <string name="rsk">РСК </string>
     <string name="cbk">Коммерческий</string>
     <string name="fkb">Финанс Кредит</string>
-    <string name="dos_credo">ДосКредо</string>
+    <string name="dos_credo">Дос Кредо</string>
     <string name="progress_title">Пожалуйста, подождите</string>
     <string name="progress_message_even">Обновление валют..</string>
     <string name="progress_message_odd">Обновление валют...</string>
     <string name="last_updated">Последнее обновление</string>
     <string name="default_text">Валюта была успешно обновлена</string>
-    <string name="days">дней</string>
-    <string name="hours">часов</string>
-    <string name="minutes">минута</string>
-    <string name="seconds_ago">секунд назад</string>
+    <string name="days">дн.</string>
+    <string name="hours">час.</string>
+    <string name="minutes">мин.</string>
+    <string name="seconds_ago">сек. назад</string>
     <string name="app_name">Валюта</string>
     <string name="som">СОМ</string>
     <string name="toggle">тогл</string>
     <string name="usd">Доллар</string>
+    <string name="no_internet">Нет подключение к интернету. Пожалуйста, подключитесь к Интернету.</string>
 </resources>

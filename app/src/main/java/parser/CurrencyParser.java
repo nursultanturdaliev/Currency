@@ -2,7 +2,6 @@ package parser;
 
 import android.content.Context;
 import android.os.AsyncTask;
-import android.util.Log;
 
 import com.nurolopher.currency.MainActivity;
 import com.nurolopher.currency.R;
@@ -77,7 +76,7 @@ public class CurrencyParser extends AsyncTask<String, Integer, String[][]> {
                             break;
                     }
                 } catch (Exception e) {
-                    Log.e(TAG, e.getMessage());
+
                 }
                 actual_index += count;
                 publishProgress(index);
@@ -133,7 +132,7 @@ public class CurrencyParser extends AsyncTask<String, Integer, String[][]> {
                 }
             }
         } catch (Exception e) {
-            Log.e(TAG, e.getMessage());
+
         }
 
         return count;
@@ -148,7 +147,7 @@ public class CurrencyParser extends AsyncTask<String, Integer, String[][]> {
                 count = 1;
             }
         } catch (Exception e) {
-            Log.e(TAG, e.getMessage());
+
         }
 
         return count;
@@ -166,7 +165,7 @@ public class CurrencyParser extends AsyncTask<String, Integer, String[][]> {
                 }
             }
         } catch (Exception e) {
-            Log.e(TAG, e.getMessage());
+
         }
 
         return count;
@@ -183,7 +182,7 @@ public class CurrencyParser extends AsyncTask<String, Integer, String[][]> {
                 count = 1;
             }
         } catch (Exception e) {
-            Log.e(TAG, e.getMessage());
+
         }
 
         return count;
@@ -200,7 +199,7 @@ public class CurrencyParser extends AsyncTask<String, Integer, String[][]> {
                 count = 1;
             }
         } catch (Exception e) {
-            Log.e(TAG, e.getMessage());
+
         }
 
         return count;
@@ -218,7 +217,7 @@ public class CurrencyParser extends AsyncTask<String, Integer, String[][]> {
                 count = 1;
             }
         } catch (Exception e) {
-            Log.e(TAG, e.getMessage());
+
         }
 
         return count;
@@ -234,7 +233,7 @@ public class CurrencyParser extends AsyncTask<String, Integer, String[][]> {
                 count = 1;
             }
         } catch (Exception e) {
-            Log.e(TAG, e.getMessage());
+
         }
 
         return count;
@@ -253,7 +252,7 @@ public class CurrencyParser extends AsyncTask<String, Integer, String[][]> {
                 count = 1;
             }
         } catch (Exception e) {
-            Log.e(TAG, e.getMessage());
+
         }
 
         return count;
@@ -270,7 +269,7 @@ public class CurrencyParser extends AsyncTask<String, Integer, String[][]> {
                 count = 1;
             }
         } catch (Exception e) {
-            Log.e(TAG, e.getMessage());
+
         }
         return count;
     }
@@ -298,7 +297,7 @@ public class CurrencyParser extends AsyncTask<String, Integer, String[][]> {
             count = 1;
 
         } catch (Exception e) {
-            Log.e(TAG, e.getMessage());
+
         }
         return count;
     }
@@ -314,7 +313,7 @@ public class CurrencyParser extends AsyncTask<String, Integer, String[][]> {
                 count = 1;
             }
         } catch (Exception e) {
-            Log.e(TAG, e.getMessage());
+
         }
 
         return count;
@@ -335,7 +334,7 @@ public class CurrencyParser extends AsyncTask<String, Integer, String[][]> {
             }
 
         } catch (Exception e) {
-            Log.e(TAG, e.getMessage());
+
         }
         return count;
     }

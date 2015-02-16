@@ -9,7 +9,7 @@
         <item>RUB</item>
         <item>KZT</item>
     </string-array>
-    <string name="action_update">жанылоо</string>
+    <string name="action_update">жаңылоо</string>
     <string name="nbkr">Улуттук Банк</string>
     <string name="eco">ЭкоИсламик </string>
     <string name="demir">Демир</string>
@@ -20,18 +20,19 @@
     <string name="ayil">Айыл </string>
     <string name="rsk">РСК </string>
     <string name="cbk">Коммерциялык</string>
-    <string name="dos_credo">ДосКредо</string>
-    <string name="progress_message_even">Валюталарды жанылоодо..</string>
-    <string name="progress_message_odd">Валюталарды жанылоодо...</string>
-    <string name="last_updated">Акыркы жанылоо</string>
-    <string name="default_text">Currencies has been successfully updated</string>
+    <string name="dos_credo">Дос Кредо</string>
+    <string name="progress_message_even">Валюталарды жаңылоодо..</string>
+    <string name="progress_message_odd">Валюталарды жаңылоодо...</string>
+    <string name="last_updated">Акыркы жаңылоо</string>
+    <string name="default_text">Валюта курстары ийгиликтүү өзгөртүлдү</string>
     <string name="days">күн</string>
     <string name="hours">саат</string>
-    <string name="minutes">минута</string>
+    <string name="minutes">мин.</string>
     <string name="seconds_ago">секунда мурун</string>
     <string name="fkb">Финанс Кредит</string>
-    <string name="progress_title">Куто турунуз</string>
+    <string name="progress_title">Күтө туруңуз</string>
     <string name="som">СОМ</string>
     <string name="toggle">тогл</string>
     <string name="usd">Доллар</string>
+    <string name="no_internet">Интернет байланышы жок. Биринчи интернетке байланыңыз</string>
 </resources>

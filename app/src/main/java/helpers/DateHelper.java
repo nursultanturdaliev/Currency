@@ -1,7 +1,5 @@
 package helpers;
 
-import android.util.Log;
-
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -23,7 +21,6 @@ public class DateHelper {
             lastUpdateDate = dateFormat.parse(lastUpdateDateStr);
         } catch (ParseException e) {
             lastUpdateDate = new Date();
-            Log.e(TAG, "Error on DateHelper");
         }
         Date currentDate = new Date();
 
