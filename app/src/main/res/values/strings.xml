@@ -34,4 +34,5 @@
     <string name="som">SOM</string>
     <string name="usd">USD</string>
     <string name="toggle">toggle</string>
+    <string name="no_internet">No internet connection. Please, connect to an internet first.</string>
 </resources>

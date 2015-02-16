@@ -6,6 +6,8 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
@@ -21,11 +23,11 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 import adapter.TabsPagerAdapter;
+import helpers.DateHelper;
+import helpers.StringHelper;
 import parser.BankURL;
 import parser.Currency;
 import parser.CurrencyParser;
-import helpers.DateHelper;
-import helpers.StringHelper;
 
 
 public class MainActivity extends FragmentActivity implements ActionBar.TabListener {
@@ -101,9 +103,13 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
         int id = item.getItemId();
         switch (id) {
             case R.id.action_update:
-                Currency.currencyTable = new String[][]{};
-                CurrencyParser currencyParser = new CurrencyParser(this);
-                currencyParser.execute(BankURL.getArrayURL());
+                if (isNetworkConnected()) {
+                    Currency.currencyTable = new String[][]{};
+                    CurrencyParser currencyParser = new CurrencyParser(this);
+                    currencyParser.execute(BankURL.getArrayURL());
+                } else {
+                    Toast.makeText(getApplicationContext(), R.string.no_internet, Toast.LENGTH_LONG).show();
+                }
                 break;
             case R.id.action_last_updated:
                 MainActivity.showUpdateToast(getApplicationContext());
@@ -193,7 +199,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
         long timeDiff = dateDiff[4];
 
         if (days > 0) {
-            toastMessage.append(days + " " + context.getString(R.string.days));
+            toastMessage.append(days + " " + context.getString(R.string.days) + " ");
         }
         if (hours > 0) {
             toastMessage.append(hours + " " + context.getString(R.string.hours) + " ");
@@ -210,6 +216,13 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
         }
         toastMessage.insert(0, defaultText);
         Toast.makeText(context.getApplicationContext(), toastMessage.toString(), Toast.LENGTH_LONG).show();
+
+    }
+
+    public boolean isNetworkConnected() {
+        ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
+        return networkInfo != null && networkInfo.isConnected();
 
     }
 }
