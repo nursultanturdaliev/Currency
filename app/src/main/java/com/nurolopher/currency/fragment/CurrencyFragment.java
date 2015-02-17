@@ -53,7 +53,7 @@ public class CurrencyFragment extends ListFragment {
             //dialog
             final Dialog dialog = new Dialog(getActivity());
             dialog.setContentView(R.layout.converter_dialog);
-            dialog.setTitle("Converter");
+            dialog.setTitle(getActivity().getString(R.string.converter_title));
 
             //currency titles
             final TextView txtCurrencyLeft = (TextView) dialog.findViewById(R.id.txtCurrencyLeft);

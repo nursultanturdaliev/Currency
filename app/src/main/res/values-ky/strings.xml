@@ -35,4 +35,5 @@
     <string name="toggle">тогл</string>
     <string name="usd">Доллар</string>
     <string name="no_internet">Интернет байланышы жок. Биринчи интернетке байланыңыз</string>
+    <string name="converter_title">Конвертер</string>
 </resources>

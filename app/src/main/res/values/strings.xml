@@ -35,4 +35,5 @@
     <string name="usd">USD</string>
     <string name="toggle">toggle</string>
     <string name="no_internet">No internet connection. Please, connect to an internet.</string>
+    <string name="converter_title">Converter</string>
 </resources>
