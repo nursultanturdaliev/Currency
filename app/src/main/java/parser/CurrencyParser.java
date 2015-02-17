@@ -86,6 +86,7 @@ public class CurrencyParser extends AsyncTask<String, Integer, String[][]> {
             Currency.normalizeCurrencyTable();
             return Currency.currencyTable;
         } else {
+            Currency.normalizeCurrencyTable();
             return Currency.currencyTable;
         }
 

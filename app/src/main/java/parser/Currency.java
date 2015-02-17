@@ -36,7 +36,7 @@ public class Currency {
     public static void normalizeCurrencyTable() {
         int count = 0;
         for (int i = 0; i < currencyTable.length; i++) {
-            if (currencyTable[i][0] != null) {
+            if (currencyTable[i][3] != null) {
                 count++;
             }
         }
