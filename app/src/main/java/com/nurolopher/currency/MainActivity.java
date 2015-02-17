@@ -74,6 +74,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
         String currencyInString = sharedPreferences.getString(currencyPrefTag, "");
 
         Currency.currencyTable = StringHelper.unMergeString(currencyInString);
+        Currency.normalizeCurrencyTable();
 
         CurrencyParser currencyParser = new CurrencyParser(this);
         currencyParser.execute(BankURL.getArrayURL());
@@ -85,7 +86,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 
         MainActivity.progressDialog.dismiss();
         Currency.normalizeCurrencyTable();
-        
+
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS_CURRENCY, 0);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString(currencyPrefTag, StringHelper.mergeDoubleStringArray(Currency.currencyTable));

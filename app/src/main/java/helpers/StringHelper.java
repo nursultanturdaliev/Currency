@@ -23,16 +23,21 @@ public class StringHelper {
     }
 
     public static String[][] unMergeString(String string) {
-        if (string.isEmpty() || string.equals(null)) {
-            return new String[][]{};
-        }
-        String[] rows = string.split("#");
-        String[][] result = new String[rows.length][4];
-        for (int i = 0; i < rows.length; i++) {
-            String[] cells = rows[i].split("\\$");
-            for (int j = 0; j < 4; j++) {
-                result[i][j] = cells[j];
+        String[][] result;
+        try {
+            if (string.isEmpty() || string.equals(null)) {
+                return new String[][]{};
             }
+            String[] rows = string.split("#");
+            result = new String[rows.length][4];
+            for (int i = 0; i < rows.length; i++) {
+                String[] cells = rows[i].split("\\$");
+                for (int j = 0; j < 4; j++) {
+                    result[i][j] = cells[j];
+                }
+            }
+        } catch (Exception e) {
+            return new String[][]{};
         }
         return result;
     }
