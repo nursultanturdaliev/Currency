@@ -111,6 +111,7 @@ public class CurrencyParser extends AsyncTask<String, Integer, String[][]> {
         MainActivity.tabsPagerAdapter = new TabsPagerAdapter(((MainActivity) context).getSupportFragmentManager());
         MainActivity.viewPager.setAdapter(MainActivity.tabsPagerAdapter);
         MainActivity.showUpdateToast(context);
+        MainActivity.actionBar.setSelectedNavigationItem(0);
     }
 
     @Override

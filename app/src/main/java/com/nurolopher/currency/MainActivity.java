@@ -37,7 +37,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
     public static final String datePrefTag = "date_updated";
 
     public static ViewPager viewPager;
-    private android.app.ActionBar actionBar;
+    public static android.app.ActionBar actionBar;
     public static TabsPagerAdapter tabsPagerAdapter;
 
     public static ProgressDialog progressDialog;
@@ -61,6 +61,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
         actionBar.setHomeButtonEnabled(false);
+        actionBar.setSelectedNavigationItem(0);
 
         viewPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
 
