@@ -1,4 +1,4 @@
-package helpers;
+package com.nurolopher.currency;
 
 /**
  * Created by nursultan on 12-Feb 15.

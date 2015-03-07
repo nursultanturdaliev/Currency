@@ -1,9 +1,10 @@
 package adapter;
 
-import android.support.v4.app.*;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
 
-import parser.Currency;
-
+import com.nurolopher.currency.Currency;
 import com.nurolopher.currency.fragment.CurrencyFragment;
 
 /**

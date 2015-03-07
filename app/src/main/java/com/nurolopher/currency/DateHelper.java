@@ -1,21 +1,20 @@
-package helpers;
+package com.nurolopher.currency;
 
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 /**
  * Created by nursultan on 14-Feb 15.
  */
 public class DateHelper {
 
-    private static final String TAG = "date_helper";
-
     public static long[] getDateDiff(String lastUpdateDateStr) {
         long[] dateDiff = new long[5];
         Date lastUpdateDate;
-        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss", Locale.US);
 
         try {
             lastUpdateDate = dateFormat.parse(lastUpdateDateStr);

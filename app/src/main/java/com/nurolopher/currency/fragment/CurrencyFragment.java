@@ -11,10 +11,10 @@ import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.nurolopher.currency.Currency;
 import com.nurolopher.currency.R;
 
 import adapter.CurrencyAdapter;
-import parser.Currency;
 
 
 public class CurrencyFragment extends ListFragment {

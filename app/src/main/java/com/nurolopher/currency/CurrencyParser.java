@@ -1,10 +1,7 @@
-package parser;
+package com.nurolopher.currency;
 
 import android.content.Context;
 import android.os.AsyncTask;
-
-import com.nurolopher.currency.MainActivity;
-import com.nurolopher.currency.R;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;

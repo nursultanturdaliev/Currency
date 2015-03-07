@@ -22,7 +22,7 @@
     <string name="dos_credo">Дос Кредо</string>
     <string name="progress_title">Пожалуйста, подождите</string>
     <string name="progress_message_even">Обновление валют..</string>
-    <string name="progress_message_odd">Обновление валют...</string>
+    <string name="progress_message_odd">Обновление валют…</string>
     <string name="last_updated">Последнее обновление</string>
     <string name="default_text">Валюта была успешно обновлена</string>
     <string name="days">дн.</string>
@@ -35,4 +35,5 @@
     <string name="usd">Доллар</string>
     <string name="no_internet">Нет подключение к интернету. Пожалуйста, подключитесь к Интернету.</string>
     <string name="converter_title">Конвертер</string>
+    <string name="ic_welcome">Добро пожаловать!</string>
 </resources>

@@ -21,8 +21,8 @@
     <string name="rsk">РСК </string>
     <string name="cbk">Коммерциялык</string>
     <string name="dos_credo">Дос Кредо</string>
-    <string name="progress_message_even">Валюталарды жаңылоодо..</string>
-    <string name="progress_message_odd">Валюталарды жаңылоодо...</string>
+    <string name="progress_message_even">Валюталарды жаңылоодо.. </string>
+    <string name="progress_message_odd">Валюталарды жаңылоодо…</string>
     <string name="last_updated">Акыркы жаңылоо</string>
     <string name="default_text">Валюта курстары ийгиликтүү өзгөртүлдү</string>
     <string name="days">күн</string>
@@ -36,4 +36,5 @@
     <string name="usd">Доллар</string>
     <string name="no_internet">Интернет байланышы жок. Биринчи интернетке байланыңыз</string>
     <string name="converter_title">Конвертер</string>
+    <string name="ic_welcome">Куш келипсиз!</string>
 </resources>

@@ -7,9 +7,8 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import com.nurolopher.currency.Currency;
 import com.nurolopher.currency.R;
-
-import parser.Currency;
 
 
 /**

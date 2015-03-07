@@ -1,4 +1,4 @@
-package parser;
+package com.nurolopher.currency;
 
 import java.util.Arrays;
 
@@ -12,6 +12,8 @@ public class Currency {
     public static final String RUB = "RUB";
     public static final String KZT = "KZT";
     public static final String SOM = "SOM";
+    public static final String SHARED_PREFS_CURRENCY = "SHARED_PREFS_CURRENCY";
+    public static final String currencyPrefTag = "currency_table";
     public static String[][] currencyTable;
 
     public static String[] getCurrencyArray() {

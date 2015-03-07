@@ -20,20 +20,13 @@ import java.lang.reflect.Field;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Locale;
 
 import adapter.TabsPagerAdapter;
-import helpers.DateHelper;
-import helpers.StringHelper;
-import parser.BankURL;
-import parser.Currency;
-import parser.CurrencyParser;
 
 
 public class MainActivity extends FragmentActivity implements ActionBar.TabListener {
 
-    private static final String TAG = "MainActivity";
-    public static final String SHARED_PREFS_CURRENCY = "SHARED_PREFS_CURRENCY";
-    public static final String currencyPrefTag = "currency_table";
     public static final String datePrefTag = "date_updated";
 
     public static ViewPager viewPager;
@@ -71,8 +64,8 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
             }
         });
 
-        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS_CURRENCY, 0);
-        String currencyInString = sharedPreferences.getString(currencyPrefTag, "");
+        SharedPreferences sharedPreferences = getSharedPreferences(Currency.SHARED_PREFS_CURRENCY, 0);
+        String currencyInString = sharedPreferences.getString(Currency.currencyPrefTag, "");
 
         Currency.currencyTable = StringHelper.unMergeString(currencyInString);
         Currency.normalizeCurrencyTable();
@@ -88,10 +81,10 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
         MainActivity.progressDialog.dismiss();
         Currency.normalizeCurrencyTable();
 
-        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS_CURRENCY, 0);
+        SharedPreferences sharedPreferences = getSharedPreferences(Currency.SHARED_PREFS_CURRENCY, 0);
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString(currencyPrefTag, StringHelper.mergeDoubleStringArray(Currency.currencyTable));
-        editor.commit();
+        editor.putString(Currency.currencyPrefTag, StringHelper.mergeDoubleStringArray(Currency.currencyTable));
+        editor.apply();
     }
 
 
@@ -175,20 +168,20 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
     }
 
     public static void setUpdateTime(Context context) {
-        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss", Locale.US);
         Calendar calendar = Calendar.getInstance();
         String dateInString = dateFormat.format(calendar.getTime());
 
-        SharedPreferences sharedPreferences = context.getSharedPreferences(MainActivity.SHARED_PREFS_CURRENCY, 0);
+        SharedPreferences sharedPreferences = context.getSharedPreferences(Currency.SHARED_PREFS_CURRENCY, 0);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString(MainActivity.datePrefTag, dateInString);
-        editor.commit();
+        editor.apply();
 
     }
 
     public static void showUpdateToast(Context context) {
 
-        SharedPreferences sharedPreferences = context.getSharedPreferences(SHARED_PREFS_CURRENCY, 0);
+        SharedPreferences sharedPreferences = context.getSharedPreferences(Currency.SHARED_PREFS_CURRENCY, 0);
         String lastUpdateDateStr = sharedPreferences.getString(datePrefTag, "");
         long[] dateDiff = DateHelper.getDateDiff(lastUpdateDateStr);
 
