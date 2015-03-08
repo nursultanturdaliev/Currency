@@ -28,6 +28,8 @@
         <item name="android:actionModeBackground">@drawable/cab_background_top_custom</item>
         <item name="android:actionModeSplitBackground">@drawable/cab_background_bottom_custom</item>
         <item name="android:actionModeCloseButtonStyle">@style/ActionButton.CloseMode.Custom</item>
+        <item name="android:alertDialogTheme">@style/AlertDialogStyle</item>
+        <item name="android:progressBarStyleHorizontal">@style/ProgressBarAppTheme</item>
     </style>
 
     <style name="ActionBar.Solid.Custom" parent="@android:style/Widget.Holo.Light.ActionBar.Solid">
@@ -72,5 +74,35 @@
     <style name="Theme.Custom.Widget" parent="@android:style/Theme.Holo">
         <item name="android:popupMenuStyle">@style/PopupMenu.Custom</item>
         <item name="android:dropDownListViewStyle">@style/DropDownListView.Custom</item>
+    </style>
+
+    <style name="AlertDialogStyle" parent="@android:style/Theme.Holo.Light.Dialog">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowMinWidthMajor">@android:dimen/dialog_min_width_major</item>
+        <item name="android:windowMinWidthMinor">@android:dimen/dialog_min_width_minor</item>
+        <item name="android:windowTitleStyle">@style/DialogWindowTitle</item>
+        <item name="android:progressBarStyleHorizontal">@style/ProgressBarAppTheme</item>
+        <item name="android:dividerHorizontal">@drawable/alert_dialog_divider</item>
+    </style>
+
+    <style name="DialogWindowTitle">
+        <item name="android:maxLines">1</item>
+        <item name="android:scrollHorizontally">true</item>
+        <item name="android:textAppearance">@style/DialogWindowTitleAppearance</item>
+    </style>
+
+    <style name="DialogWindowTitleAppearance" parent="@android:style/TextAppearance.Holo.DialogWindowTitle">
+        <item name="android:textColor">#ff000000</item>
+    </style>
+
+    <style name="ProgressBarAppTheme" parent="android:Widget.ProgressBar.Horizontal">
+        <item name="android:progressDrawable">@drawable/apptheme_progress_horizontal_holo_light
+        </item>
+        <item name="android:indeterminateDrawable">
+            @drawable/apptheme_progress_indeterminate_horizontal_holo_light
+        </item>
+        <item name="android:minHeight">16dip</item>
+        <item name="android:maxHeight">16dip</item>
     </style>
 </resources>

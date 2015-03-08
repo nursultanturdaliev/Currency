@@ -167,6 +167,10 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
         progressDialog.setCanceledOnTouchOutside(false);
         progressDialog.show();
 
+        int dividerId = progressDialog.getContext().getResources().getIdentifier("android:id/titleDivider", null, null);
+        View divider = progressDialog.findViewById(dividerId);
+        divider.setBackgroundColor(context.getResources().getColor(R.color.application_color));
+
     }
 
     public static void toggleProgressBarMessage(Context context, int value) {
