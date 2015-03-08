@@ -119,6 +119,9 @@ public class CurrencyFragment extends ListFragment {
                 }
             });
             dialog.show();
+            int dividerId = dialog.getContext().getResources().getIdentifier("android:id/titleDivider", null, null);
+            View divider = dialog.findViewById(dividerId);
+            divider.setBackgroundColor(getActivity().getResources().getColor(R.color.application_color));
         }
     }
 

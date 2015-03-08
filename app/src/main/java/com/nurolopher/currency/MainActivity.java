@@ -13,6 +13,7 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.ViewConfiguration;
 import android.widget.Toast;
 
@@ -91,7 +92,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS_CURRENCY, 0);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString(currencyPrefTag, StringHelper.mergeDoubleStringArray(Currency.currencyTable));
-        editor.commit();
+        editor.apply();
     }
 
 
@@ -111,7 +112,10 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
                     CurrencyParser currencyParser = new CurrencyParser(this);
                     currencyParser.execute(BankURL.getArrayURL());
                 } else {
-                    Toast.makeText(getApplicationContext(), R.string.no_internet, Toast.LENGTH_LONG).show();
+                    Toast toast = Toast.makeText(getApplicationContext(), R.string.no_internet, Toast.LENGTH_LONG);
+                    View view = toast.getView();
+                    view.setBackgroundColor(getResources().getColor(R.color.application_color));
+                    toast.show();
                 }
                 break;
             case R.id.action_last_updated:
@@ -163,6 +167,10 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
         progressDialog.setCanceledOnTouchOutside(false);
         progressDialog.show();
 
+        int dividerId = progressDialog.getContext().getResources().getIdentifier("android:id/titleDivider", null, null);
+        View divider = progressDialog.findViewById(dividerId);
+        divider.setBackgroundColor(context.getResources().getColor(R.color.application_color));
+
     }
 
     public static void toggleProgressBarMessage(Context context, int value) {
@@ -182,7 +190,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
         SharedPreferences sharedPreferences = context.getSharedPreferences(MainActivity.SHARED_PREFS_CURRENCY, 0);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString(MainActivity.datePrefTag, dateInString);
-        editor.commit();
+        editor.apply();
 
     }
 
@@ -218,7 +226,10 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
             defaultText = context.getString(R.string.last_updated) + " ";
         }
         toastMessage.insert(0, defaultText);
-        Toast.makeText(context.getApplicationContext(), toastMessage.toString(), Toast.LENGTH_LONG).show();
+        Toast toast = Toast.makeText(context.getApplicationContext(), toastMessage.toString(), Toast.LENGTH_LONG);
+        View view = toast.getView();
+        view.setBackgroundColor(context.getResources().getColor(R.color.application_color));
+        toast.show();
 
     }
 
