@@ -7,13 +7,13 @@
         android:title="@string/action_update"
         android:icon="@drawable/ic_action_refresh"
         android:orderInCategory="2"
-        app:showAsAction="always"
-        android:showAsAction="always" />
+        app:showAsAction="ifRoom"
+        android:showAsAction="ifRoom" />
     <item
         android:id="@+id/action_last_updated"
         android:title="@string/last_updated"
         android:icon="@drawable/ic_action_time"
         android:orderInCategory="1"
-        app:showAsAction="always"
-        android:showAsAction="always" />
+        app:showAsAction="ifRoom"
+        android:showAsAction="ifRoom" />
 </menu>

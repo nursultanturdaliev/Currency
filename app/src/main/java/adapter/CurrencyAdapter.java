@@ -19,8 +19,8 @@ public class CurrencyAdapter extends ArrayAdapter {
 
     private final String currencyType;
 
-    public CurrencyAdapter(Context context, int resource, String currencyType) {
-        super(context, resource, Currency.currencyTable);
+    public CurrencyAdapter(Context context, String currencyType) {
+        super(context, R.layout.fragment_currency, Currency.currencyTable);
         this.currencyType = currencyType;
     }
 

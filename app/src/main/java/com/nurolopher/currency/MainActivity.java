@@ -32,10 +32,9 @@ import parser.CurrencyParser;
 
 public class MainActivity extends FragmentActivity implements ActionBar.TabListener {
 
-    private static final String TAG = "MainActivity";
-    public static final String SHARED_PREFS_CURRENCY = "SHARED_PREFS_CURRENCY";
-    public static final String currencyPrefTag = "currency_table";
-    public static final String datePrefTag = "date_updated";
+    private static final String SHARED_PREFS_CURRENCY = "SHARED_PREFS_CURRENCY";
+    private static final String currencyPrefTag = "currency_table";
+    private static final String datePrefTag = "date_updated";
 
     public static ViewPager viewPager;
     public static android.app.ActionBar actionBar;
@@ -151,7 +150,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
                 menuKeyField.setAccessible(true);
                 menuKeyField.setBoolean(config, false);
             }
-        } catch (Exception e) {
+        } catch (Exception ignored) {
 
         }
     }
@@ -210,16 +209,16 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
         long timeDiff = dateDiff[4];
 
         if (days > 0) {
-            toastMessage.append(days + " " + context.getString(R.string.days) + " ");
+            toastMessage.append(days).append(" ").append(context.getString(R.string.days)).append(" ");
         }
         if (hours > 0) {
-            toastMessage.append(hours + " " + context.getString(R.string.hours) + " ");
+            toastMessage.append(hours).append(" ").append(context.getString(R.string.hours)).append(" ");
         }
         if (minutes > 0) {
-            toastMessage.append(minutes + " " + context.getString(R.string.minutes) + " ");
+            toastMessage.append(minutes).append(" ").append(context.getString(R.string.minutes)).append(" ");
         }
         if (seconds > 0) {
-            toastMessage.append(seconds + " " + context.getString(R.string.seconds_ago));
+            toastMessage.append(seconds).append(" ").append(context.getString(R.string.seconds_ago));
 
         }
         if (timeDiff / 1000 > 0) {
@@ -233,7 +232,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 
     }
 
-    public boolean isNetworkConnected() {
+    boolean isNetworkConnected() {
         ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
         return networkInfo != null && networkInfo.isConnected();

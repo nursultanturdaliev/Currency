@@ -10,8 +10,6 @@ import java.util.Date;
  */
 public class DateHelper {
 
-    private static final String TAG = "date_helper";
-
     public static long[] getDateDiff(String lastUpdateDateStr) {
         long[] dateDiff = new long[5];
         Date lastUpdateDate;

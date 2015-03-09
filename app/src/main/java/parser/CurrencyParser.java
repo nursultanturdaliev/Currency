@@ -18,8 +18,7 @@ import adapter.TabsPagerAdapter;
  * Created by nursultan on 6-Feb 15.
  */
 public class CurrencyParser extends AsyncTask<String, Integer, String[][]> {
-    private static final String TAG = "CurrencyParser";
-    private Context context;
+    private final Context context;
     private Document document;
     private Elements rows;
 
@@ -38,44 +37,44 @@ public class CurrencyParser extends AsyncTask<String, Integer, String[][]> {
                 try {
                     switch (urls[index]) {
                         case BankURL.ECO:
-                            count = parseEco(actual_index, count, BankURL.ECO);
+                            count = parseEco(actual_index, count);
                             break;
                         case BankURL.NBKR:
-                            count = parseNBKR(actual_index, count, BankURL.NBKR);
+                            count = parseNBKR(actual_index, count);
                             break;
                         case BankURL.DEMIR:
-                            count = parseDEMIR(actual_index, count, BankURL.DEMIR);
+                            count = parseDEMIR(actual_index, count);
                             break;
                         case BankURL.OPTIMA:
-                            count = parseOPTIMA(actual_index, count, BankURL.OPTIMA);
+                            count = parseOPTIMA(actual_index, count);
                             break;
                         case BankURL.ROSIN:
-                            count = parseROSIN(actual_index, count, BankURL.ROSIN);
+                            count = parseROSIN(actual_index, count);
                             break;
                         case BankURL.KICB:
-                            count = parseKICB(actual_index, count, BankURL.KICB);
+                            count = parseKICB(actual_index, count);
                             break;
                         case BankURL.BTA:
-                            count = parseBTA(actual_index, count, BankURL.BTA);
+                            count = parseBTA(actual_index, count);
                             break;
                         case BankURL.AYIL:
-                            count = parseAYIL(actual_index, count, BankURL.AYIL);
+                            count = parseAYIL(actual_index, count);
                             break;
                         case BankURL.RSK:
-                            count = parseRSK(actual_index, count, BankURL.RSK);
+                            count = parseRSK(actual_index, count);
                             break;
                         case BankURL.CBK:
-                            count = parseCBK(actual_index, count, BankURL.CBK);
+                            count = parseCBK(actual_index, count);
                             break;
                         case BankURL.FKB:
-                            count = parseFKB(actual_index, count, BankURL.FKB);
+                            count = parseFKB(actual_index, count);
                             break;
                         case BankURL.DOS_CREDO:
-                            count = parseDOS(actual_index, count, BankURL.DOS_CREDO);
+                            count = parseDOS(actual_index, count);
                         default:
                             break;
                     }
-                } catch (Exception e) {
+                } catch (Exception ignored) {
 
                 }
                 actual_index += count;
@@ -122,9 +121,9 @@ public class CurrencyParser extends AsyncTask<String, Integer, String[][]> {
 
     }
 
-    private int parseDEMIR(int actual_index, int count, String url) {
+    private int parseDEMIR(int actual_index, int count) {
         try {
-            document = Jsoup.connect(url).get();
+            document = Jsoup.connect(BankURL.DEMIR).get();
             rows = document.select("#moneytable tr");
             for (int i = 1; i < 5; i++) {
                 Elements rowCells = rows.get(i).select("td");
@@ -133,31 +132,31 @@ public class CurrencyParser extends AsyncTask<String, Integer, String[][]> {
                     count = 1;
                 }
             }
-        } catch (Exception e) {
+        } catch (Exception ignored) {
 
         }
 
         return count;
     }
 
-    private int parseNBKR(int actual_index, int count, String url) {
+    private int parseNBKR(int actual_index, int count) {
         try {
-            document = Jsoup.parse(Jsoup.connect(url).get().body().toString(), url, Parser.xmlParser());
+            document = Jsoup.parse(Jsoup.connect(BankURL.NBKR).get().body().toString(), BankURL.NBKR, Parser.xmlParser());
             rows = document.select("Currency");
             for (int i = 0; i < rows.size(); i++) {
                 Currency.currencyTable[actual_index][i] = context.getResources().getString(R.string.nbkr) + ";" + rows.get(i).attr("isocode").trim() + ";" + rows.get(i).select("Value").get(0).text() + ";" + rows.get(i).select("Value").get(0).text();
                 count = 1;
             }
-        } catch (Exception e) {
+        } catch (Exception ignored) {
 
         }
 
         return count;
     }
 
-    private int parseEco(int actual_index, int count, String url) {
+    private int parseEco(int actual_index, int count) {
         try {
-            document = Jsoup.connect(url).get();
+            document = Jsoup.connect(BankURL.ECO).get();
             rows = document.getElementsByClass("row");
             for (int i = 1; i < rows.size(); i++) {
                 Elements rowCells = rows.get(i).getElementsByClass("cell");
@@ -166,16 +165,16 @@ public class CurrencyParser extends AsyncTask<String, Integer, String[][]> {
                     count = 1;
                 }
             }
-        } catch (Exception e) {
+        } catch (Exception ignored) {
 
         }
 
         return count;
     }
 
-    private int parseOPTIMA(int actual_index, int count, String url) {
+    private int parseOPTIMA(int actual_index, int count) {
         try {
-            document = Jsoup.connect(url).get();
+            document = Jsoup.connect(BankURL.OPTIMA).get();
             Element table = document.select(".currency_table").first();
             Elements rows = table.select("tr");
             for (int i = 2; i < 6; i++) {
@@ -183,16 +182,16 @@ public class CurrencyParser extends AsyncTask<String, Integer, String[][]> {
                 Currency.currencyTable[actual_index][i - 2] = context.getResources().getString(R.string.optima) + ";" + Currency.getCurrencyArrayAt(i - 2) + ";" + cell.get(0).text() + ";" + cell.get(1).text();
                 count = 1;
             }
-        } catch (Exception e) {
+        } catch (Exception ignored) {
 
         }
 
         return count;
     }
 
-    private int parseROSIN(int actual_index, int count, String url) {
+    private int parseROSIN(int actual_index, int count) {
         try {
-            document = Jsoup.connect(url).get();
+            document = Jsoup.connect(BankURL.ROSIN).get();
             Element table = document.getElementsByClass("currency").first().select("table").first();
             Elements rows = table.select("tbody tr");
             for (int i = 0; i < 4; i++) {
@@ -200,16 +199,16 @@ public class CurrencyParser extends AsyncTask<String, Integer, String[][]> {
                 Currency.currencyTable[actual_index][i] = context.getResources().getString(R.string.rosin) + ";" + cells.get(0).select("div").first().text().trim() + ";" + cells.get(1).text() + ";" + cells.get(2).text();
                 count = 1;
             }
-        } catch (Exception e) {
+        } catch (Exception ignored) {
 
         }
 
         return count;
     }
 
-    private int parseKICB(int actual_index, int count, String url) {
+    private int parseKICB(int actual_index, int count) {
         try {
-            document = Jsoup.connect(url).get();
+            document = Jsoup.connect(BankURL.KICB).get();
             Element table = document.getElementsByClass("con").first();
             Elements rows = table.getElementsByClass("cur_line");
             rows.remove(rows.select("img"));
@@ -218,32 +217,32 @@ public class CurrencyParser extends AsyncTask<String, Integer, String[][]> {
                 Currency.currencyTable[actual_index][i - 1] = context.getResources().getString(R.string.kicb) + ";" + cells.get(0).text().trim() + ";" + cells.get(1).text() + ";" + cells.get(2).text();
                 count = 1;
             }
-        } catch (Exception e) {
+        } catch (Exception ignored) {
 
         }
 
         return count;
     }
 
-    private int parseBTA(int actual_index, int count, String url) {
+    private int parseBTA(int actual_index, int count) {
         try {
-            document = Jsoup.connect(url).get();
+            document = Jsoup.connect(BankURL.BTA).get();
             Elements rows = document.select("table.currency tbody tr");
             for (int i = 2; i < 6; i++) {
                 Elements cells = rows.get(i).select("td");
                 Currency.currencyTable[actual_index][i - 2] = context.getResources().getString(R.string.bta) + ";" + cells.get(0).text().trim() + ";" + cells.get(1).text() + ";" + cells.get(2).text();
                 count = 1;
             }
-        } catch (Exception e) {
+        } catch (Exception ignored) {
 
         }
 
         return count;
     }
 
-    private int parseAYIL(int actual_index, int count, String url) {
+    private int parseAYIL(int actual_index, int count) {
         try {
-            document = Jsoup.connect(url).get();
+            document = Jsoup.connect(BankURL.AYIL).get();
             Elements rows = document.select("#ja-col1 table tbody tr");
             for (int i = 1; i < rows.size(); i++) {
                 Elements cells = rows.get(i).select("td");
@@ -253,16 +252,16 @@ public class CurrencyParser extends AsyncTask<String, Integer, String[][]> {
                     Currency.currencyTable[actual_index][i - 1] = context.getResources().getString(R.string.ayil) + ";" + cells.get(0).text() + ";" + cells.get(1).text() + ";" + cells.get(2).text();
                 count = 1;
             }
-        } catch (Exception e) {
+        } catch (Exception ignored) {
 
         }
 
         return count;
     }
 
-    private int parseRSK(int actual_index, int count, String url) {
+    private int parseRSK(int actual_index, int count) {
         try {
-            document = Jsoup.connect(url).get();
+            document = Jsoup.connect(BankURL.RSK).get();
             Element table = document.select(".course-list").first();
             Elements rows = table.select(".item");
             for (int i = 0; i < 4; i++) {
@@ -270,15 +269,15 @@ public class CurrencyParser extends AsyncTask<String, Integer, String[][]> {
                 Currency.currencyTable[actual_index][i] = context.getResources().getString(R.string.rsk) + ";" + cells.get(1).text() + ";" + cells.get(2).text() + ";" + cells.get(3).text();
                 count = 1;
             }
-        } catch (Exception e) {
+        } catch (Exception ignored) {
 
         }
         return count;
     }
 
-    private int parseCBK(int actual_index, int count, String url) {
+    private int parseCBK(int actual_index, int count) {
         try {
-            document = Jsoup.connect(url).get();
+            document = Jsoup.connect(BankURL.CBK).get();
             Element table = document.select("#rates-table .table tbody").first();
 
             //USD
@@ -298,15 +297,15 @@ public class CurrencyParser extends AsyncTask<String, Integer, String[][]> {
             Currency.currencyTable[actual_index][3] = context.getResources().getString(R.string.cbk) + ";" + Currency.KZT + ";" + cellKZT.select(".buy").text() + ";" + cellKZT.select(".sell").text();
             count = 1;
 
-        } catch (Exception e) {
+        } catch (Exception ignored) {
 
         }
         return count;
     }
 
-    private int parseFKB(int actual_index, int count, String url) {
+    private int parseFKB(int actual_index, int count) {
         try {
-            document = Jsoup.connect(url).get();
+            document = Jsoup.connect(BankURL.FKB).get();
             Elements rows = document.select(".curency tbody tr");
             rows.removeAll(rows.select("img"));
             for (int i = 1; i < 5; i++) {
@@ -314,16 +313,16 @@ public class CurrencyParser extends AsyncTask<String, Integer, String[][]> {
                 Currency.currencyTable[actual_index][i - 1] = context.getResources().getString(R.string.fkb) + ";" + cells.get(0).select("span").first().text() + ";" + cells.get(1).text().trim() + ";" + cells.get(2).text().trim();
                 count = 1;
             }
-        } catch (Exception e) {
+        } catch (Exception ignored) {
 
         }
 
         return count;
     }
 
-    private int parseDOS(int actual_index, int count, String url) {
+    private int parseDOS(int actual_index, int count) {
         try {
-            document = Jsoup.connect(url).get();
+            document = Jsoup.connect(BankURL.DOS_CREDO).get();
             Element table = document.select(".b-currency-rates").first();
             Elements rows = table.select("tbody tr");
             for (int i = 0; i < 4; i++) {
@@ -335,7 +334,7 @@ public class CurrencyParser extends AsyncTask<String, Integer, String[][]> {
                 count = 1;
             }
 
-        } catch (Exception e) {
+        } catch (Exception ignored) {
 
         }
         return count;

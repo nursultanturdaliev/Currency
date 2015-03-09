@@ -21,7 +21,6 @@ import parser.Currency;
 public class CurrencyFragment extends ListFragment {
 
 
-    private static final String TAG = "CurrencyFragment";
     private static final String ARG_CURRENCY_TYPE = "currency_type";
     private String currencyType;
 
@@ -75,7 +74,7 @@ public class CurrencyFragment extends ListFragment {
                 @Override
                 public void onTextChanged(CharSequence s, int start, int before, int count) {
                     if (edtTxtFrom.getText().length() > 0) {
-                        if (txtCurrencyLeft.getText().toString() == Currency.SOM) {
+                        if (txtCurrencyLeft.getText().toString().equals(Currency.SOM)) {
                             double result = Double.parseDouble(edtTxtFrom.getText().toString()) / sell;
                             edtTxtTo.setText(String.format("%.2f", result));
                         } else {
@@ -103,7 +102,7 @@ public class CurrencyFragment extends ListFragment {
                     txtCurrencyLeft.setText(txtCurrencyRight.getText());
                     txtCurrencyRight.setText(tmpText);
                     if (edtTxtFrom.getText().length() > 0) {
-                        if (txtCurrencyLeft.getText().toString() == Currency.SOM) {
+                        if (txtCurrencyLeft.getText().toString().equals(Currency.SOM)) {
                             double result = Double.parseDouble(edtTxtFrom.getText().toString()) / sell;
                             edtTxtTo.setText(String.format("%.2f", result));
                         } else {
@@ -135,7 +134,7 @@ public class CurrencyFragment extends ListFragment {
         if (getArguments() != null) {
             currencyType = getArguments().getString(ARG_CURRENCY_TYPE);
         }
-        CurrencyAdapter currencyAdapter = new CurrencyAdapter(getActivity(), R.layout.fragment_currency, currencyType);
+        CurrencyAdapter currencyAdapter = new CurrencyAdapter(getActivity(), currencyType);
         setListAdapter(currencyAdapter);
     }
 }

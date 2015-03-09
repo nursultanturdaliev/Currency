@@ -14,7 +14,7 @@ public class Currency {
     public static final String SOM = "SOM";
     public static String[][] currencyTable;
 
-    public static String[] getCurrencyArray() {
+    private static String[] getCurrencyArray() {
         return new String[]{USD, EUR, RUB, KZT};
     }
 
@@ -26,7 +26,7 @@ public class Currency {
     public static int getCurrencyCell(int row, String currency) {
         if (row < Currency.currencyTable.length)
             for (int i = 0; i < 4; i++) {
-                if (currencyTable[row][i].indexOf(currency) > -1) {
+                if (currencyTable[row][i].contains(currency)) {
                     return i;
                 }
             }
@@ -35,8 +35,8 @@ public class Currency {
 
     public static void normalizeCurrencyTable() {
         int count = 0;
-        for (int i = 0; i < currencyTable.length; i++) {
-            if (currencyTable[i][3] != null) {
+        for (String[] aCurrencyTable : currencyTable) {
+            if (aCurrencyTable[3] != null) {
                 count++;
             }
         }

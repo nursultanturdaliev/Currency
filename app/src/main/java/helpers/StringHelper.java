@@ -32,9 +32,7 @@ public class StringHelper {
             result = new String[rows.length][4];
             for (int i = 0; i < rows.length; i++) {
                 String[] cells = rows[i].split("\\$");
-                for (int j = 0; j < 4; j++) {
-                    result[i][j] = cells[j];
-                }
+                System.arraycopy(cells, 0, result[i], 0, 4);
             }
         } catch (Exception e) {
             return new String[][]{};
