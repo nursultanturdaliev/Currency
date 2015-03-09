@@ -3,59 +3,62 @@
     android:id="@+id/gridLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="horizontal"
+    android:baselineAligned="false"
+    android:orientation="vertical"
     android:padding="10dp">
 
-<LinearLayout
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="2"
-        android:orientation="vertical">
+        android:layout_weight="0.00"
+        android:orientation="horizontal">
 
         <TextView
             android:id="@+id/txtCurrencyLeft"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            android:gravity="center_vertical|center_horizontal"
             android:text="@string/usd"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:textStyle="bold" />
 
-        <EditText
-            android:id="@+id/edtTxtFrom"
-            style="@style/EditTextAppTheme"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="numberDecimal" />
-    </LinearLayout>
-
-    <ImageButton
-        android:id="@+id/imgBtnToggle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/ic_dialog_switch"
-        android:contentDescription="@string/toggle" />
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="2"
-        android:orientation="vertical">
+        <ImageButton
+            android:id="@+id/imgBtnToggle"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:background="@drawable/ic_dialog_switch"
+            android:contentDescription="@string/toggle" />
 
         <TextView
             android:id="@+id/txtCurrencyRight"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            android:gravity="center_vertical|center_horizontal"
             android:text="@string/som"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:textStyle="bold" />
 
-        <EditText
-            android:id="@+id/edtTxtTo"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            style="@style/EditTextAppTheme"
-            android:inputType="numberDecimal" />
     </LinearLayout>
+
+    <EditText
+        android:id="@+id/edtTxtFrom"
+        style="@style/EditTextAppTheme"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="10dp"
+        android:inputType="numberDecimal" />
+
+    <TextView
+        android:id="@+id/edtTxtTo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textIsSelectable="true"
+        android:textSelectHandle="@drawable/apptheme_text_select_handle_middle"
+        android:textSelectHandleLeft="@drawable/apptheme_text_select_handle_left"
+        android:textSelectHandleRight="@drawable/apptheme_text_select_handle_right" />
 </LinearLayout>

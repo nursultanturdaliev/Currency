@@ -64,7 +64,7 @@ public class CurrencyFragment extends ListFragment {
 
             //currencies
             final EditText edtTxtFrom = (EditText) dialog.findViewById(R.id.edtTxtFrom);
-            final EditText edtTxtTo = (EditText) dialog.findViewById(R.id.edtTxtTo);
+            final TextView edtTxtTo = (TextView) dialog.findViewById(R.id.edtTxtTo);
 
             edtTxtFrom.addTextChangedListener(new TextWatcher() {
                 @Override
