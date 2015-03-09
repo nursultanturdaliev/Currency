@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.ContextThemeWrapper;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -51,7 +52,7 @@ public class CurrencyFragment extends ListFragment {
 
 
             //dialog
-            final Dialog dialog = new Dialog(getActivity());
+            final Dialog dialog = new Dialog(new ContextThemeWrapper(getActivity(), R.style.AlertDialogStyle));
             dialog.setContentView(R.layout.converter_dialog);
             dialog.setTitle(getActivity().getString(R.string.converter_title));
 
@@ -63,11 +64,7 @@ public class CurrencyFragment extends ListFragment {
 
             //currencies
             final EditText edtTxtFrom = (EditText) dialog.findViewById(R.id.edtTxtFrom);
-            final EditText edtTxtTo = (EditText) dialog.findViewById(R.id.edtTxtTo);
-
-            edtTxtTo.setFocusable(false);
-            edtTxtTo.setClickable(false);
-            edtTxtTo.setFocusableInTouchMode(false);
+            final TextView edtTxtTo = (TextView) dialog.findViewById(R.id.edtTxtTo);
 
             edtTxtFrom.addTextChangedListener(new TextWatcher() {
                 @Override
@@ -119,9 +116,16 @@ public class CurrencyFragment extends ListFragment {
                 }
             });
             dialog.show();
+
+            int alertTitleId = getResources().getIdentifier("android:id/alertTitle", null, null);
+            TextView alertTitle = (TextView) dialog.findViewById(alertTitleId);
+            if (alertTitle != null)
+                alertTitle.setTextColor(getResources().getColor(R.color.application_color)); // change title text color
+
             int dividerId = dialog.getContext().getResources().getIdentifier("android:id/titleDivider", null, null);
             View divider = dialog.findViewById(dividerId);
-            divider.setBackgroundColor(getActivity().getResources().getColor(R.color.application_color));
+            if (divider != null)
+                divider.setBackgroundColor(getActivity().getResources().getColor(R.color.application_color));
         }
     }
 
