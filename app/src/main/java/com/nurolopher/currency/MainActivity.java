@@ -83,15 +83,15 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 
     @Override
     protected void onStop() {
-        super.onStop();
-
-        MainActivity.progressDialog.dismiss();
+        progressDialog.dismiss();
         Currency.normalizeCurrencyTable();
 
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS_CURRENCY, 0);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString(currencyPrefTag, StringHelper.mergeDoubleStringArray(Currency.currencyTable));
         editor.apply();
+
+        super.onStop();
     }
 
 
@@ -118,7 +118,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
                 }
                 break;
             case R.id.action_last_updated:
-                MainActivity.showUpdateToast(getApplicationContext());
+                showUpdateToast(getApplicationContext());
                 break;
             default:
                 super.onOptionsItemSelected(item);
@@ -142,7 +142,6 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
     }
 
     private void getOverflowMenu() {
-
         try {
             ViewConfiguration config = ViewConfiguration.get(this);
             Field menuKeyField = ViewConfiguration.class.getDeclaredField("sHasPermanentMenuKey");
@@ -151,7 +150,6 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
                 menuKeyField.setBoolean(config, false);
             }
         } catch (Exception ignored) {
-
         }
     }
 
@@ -186,15 +184,14 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
         Calendar calendar = Calendar.getInstance();
         String dateInString = dateFormat.format(calendar.getTime());
 
-        SharedPreferences sharedPreferences = context.getSharedPreferences(MainActivity.SHARED_PREFS_CURRENCY, 0);
+        SharedPreferences sharedPreferences = context.getSharedPreferences(SHARED_PREFS_CURRENCY, 0);
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString(MainActivity.datePrefTag, dateInString);
+        editor.putString(datePrefTag, dateInString);
         editor.apply();
 
     }
 
     public static void showUpdateToast(Context context) {
-
         SharedPreferences sharedPreferences = context.getSharedPreferences(SHARED_PREFS_CURRENCY, 0);
         String lastUpdateDateStr = sharedPreferences.getString(datePrefTag, "");
         long[] dateDiff = DateHelper.getDateDiff(lastUpdateDateStr);

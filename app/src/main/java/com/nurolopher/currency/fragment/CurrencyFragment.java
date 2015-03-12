@@ -1,12 +1,14 @@
 package com.nurolopher.currency.fragment;
 
 import android.app.Dialog;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.ContextThemeWrapper;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
@@ -74,12 +76,15 @@ public class CurrencyFragment extends ListFragment {
                 @Override
                 public void onTextChanged(CharSequence s, int start, int before, int count) {
                     if (edtTxtFrom.getText().length() > 0) {
-                        if (txtCurrencyLeft.getText().toString().equals(Currency.SOM)) {
-                            double result = Double.parseDouble(edtTxtFrom.getText().toString()) / sell;
-                            edtTxtTo.setText(String.format("%.2f", result));
-                        } else {
-                            double result = Double.parseDouble(edtTxtFrom.getText().toString()) * buy;
-                            edtTxtTo.setText(String.format("%.2f", result));
+                        try {
+                            if (txtCurrencyLeft.getText().toString().equals(Currency.SOM)) {
+                                double result = Double.parseDouble(edtTxtFrom.getText().toString()) / sell;
+                                edtTxtTo.setText(String.format("%.2f", result));
+                            } else {
+                                double result = Double.parseDouble(edtTxtFrom.getText().toString()) * buy;
+                                edtTxtTo.setText(String.format("%.2f", result));
+                            }
+                        } catch (Exception ignore) {
                         }
                     } else {
                         edtTxtTo.setText("");
@@ -125,6 +130,14 @@ public class CurrencyFragment extends ListFragment {
             View divider = dialog.findViewById(dividerId);
             if (divider != null)
                 divider.setBackgroundColor(getActivity().getResources().getColor(R.color.application_color));
+
+            edtTxtFrom.post(new Runnable() {
+                public void run() {
+                    edtTxtFrom.requestFocusFromTouch();
+                    InputMethodManager lManager = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                    lManager.showSoftInput(edtTxtFrom, 0);
+                }
+            });
         }
     }
 
