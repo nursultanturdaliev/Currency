@@ -29,6 +29,9 @@ import parser.BankURL;
 import parser.Currency;
 import parser.CurrencyParser;
 
+import com.google.android.gms.analytics.GoogleAnalytics;
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 
 public class MainActivity extends FragmentActivity implements ActionBar.TabListener {
 
@@ -79,6 +82,11 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 
         CurrencyParser currencyParser = new CurrencyParser(this);
         currencyParser.execute(BankURL.getArrayURL());
+
+        Tracker t = ((SomConverterApp) getApplication()).getTracker(SomConverterApp.TrackerName.APP_TRACKER);
+        t.setScreenName("Home");
+        t.send(new HitBuilders.AppViewBuilder().build());
+
     }
 
     @Override
@@ -92,6 +100,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
         editor.apply();
 
         super.onStop();
+        GoogleAnalytics.getInstance(MainActivity.this).reportActivityStop(this);
     }
 
 
@@ -125,6 +134,13 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
         }
         return true;
     }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        GoogleAnalytics.getInstance(MainActivity.this).reportActivityStart(this);
+    }
+
 
     @Override
     public void onTabSelected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {

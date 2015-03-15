@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">Валюта</string>
+    <string name="app_name">Сом Конвертер</string>
 
     <string-array name="currency_titles">
         <item>USD</item>
@@ -19,7 +19,6 @@
     <string name="bta">БТА </string>
     <string name="ayil">Айыл </string>
     <string name="rsk">РСК </string>
-    <string name="cbk">Коммерциялык</string>
     <string name="dos_credo">Дос Кредо</string>
     <string name="progress_message_even">Валюталарды жаңылоодо..</string>
     <string name="progress_message_odd">Валюталарды жаңылоодо...</string>
@@ -36,4 +35,5 @@
     <string name="usd">Доллар</string>
     <string name="no_internet">Интернет байланышы жок. Биринчи интернетке байланыңыз</string>
     <string name="converter_title">Конвертер</string>
+    <string name="cbk">Кыргызстан</string>
 </resources>

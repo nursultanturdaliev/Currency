@@ -17,7 +17,7 @@
     <string name="bta">БТА </string>
     <string name="ayil">Айыл </string>
     <string name="rsk">РСК </string>
-    <string name="cbk">Коммерческий</string>
+    <string name="cbk">Кыргызстан</string>
     <string name="fkb">Финанс Кредит</string>
     <string name="dos_credo">Дос Кредо</string>
     <string name="progress_title">Пожалуйста, подождите</string>
@@ -29,7 +29,7 @@
     <string name="hours">час.</string>
     <string name="minutes">мин.</string>
     <string name="seconds_ago">сек. назад</string>
-    <string name="app_name">Валюта</string>
+    <string name="app_name">Сом Конвертер</string>
     <string name="som">СОМ</string>
     <string name="toggle">тогл</string>
     <string name="usd">Доллар</string>
