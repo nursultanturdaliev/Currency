@@ -1,38 +1,42 @@
 package adapter;
 
-import android.support.v4.app.*;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
 
-import parser.Currency;
-
-import com.nurolopher.currency.fragment.CurrencyFragment;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by nursultan on 5-Feb 15.
  */
+
 public class TabsPagerAdapter extends FragmentPagerAdapter {
+    private final List<Fragment> mFragmentList = new ArrayList<>();
+    private final List<String> mFragmentTitleList = new ArrayList<>();
 
-
-    public TabsPagerAdapter(FragmentManager fm) {
-        super(fm);
+    public TabsPagerAdapter(FragmentManager manager) {
+        super(manager);
     }
 
     @Override
     public Fragment getItem(int position) {
-        switch (position) {
-            case 0:
-                return CurrencyFragment.newInstance(Currency.USD);
-            case 1:
-                return CurrencyFragment.newInstance(Currency.EUR);
-            case 2:
-                return CurrencyFragment.newInstance(Currency.RUB);
-            default:
-                return CurrencyFragment.newInstance(Currency.KZT);
-        }
-
+        return mFragmentList.get(position);
     }
 
     @Override
     public int getCount() {
-        return 4;
+        return mFragmentList.size();
+    }
+
+    public void addFragment(Fragment fragment, String title) {
+        mFragmentList.add(fragment);
+        mFragmentTitleList.add(title);
+
+    }
+
+    @Override
+    public CharSequence getPageTitle(int position) {
+        return mFragmentTitleList.get(position);
     }
 }

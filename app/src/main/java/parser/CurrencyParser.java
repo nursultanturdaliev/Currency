@@ -12,8 +12,6 @@ import org.jsoup.nodes.Element;
 import org.jsoup.parser.Parser;
 import org.jsoup.select.Elements;
 
-import adapter.TabsPagerAdapter;
-
 /**
  * Created by nursultan on 6-Feb 15.
  */
@@ -106,11 +104,7 @@ public class CurrencyParser extends AsyncTask<String, Integer, String[][]> {
         Currency.currencyTable = currencies;
         MainActivity.progressDialog.cancel();
 
-
-        MainActivity.tabsPagerAdapter = new TabsPagerAdapter(((MainActivity) context).getSupportFragmentManager());
-        MainActivity.viewPager.setAdapter(MainActivity.tabsPagerAdapter);
         MainActivity.showUpdateToast(context);
-        MainActivity.actionBar.setSelectedNavigationItem(0);
     }
 
     @Override

@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <string name="app_name">Som Converter</string>
+    <string name="banner_ad_unit_id">ca-app-pub-7828139183087538/8642666655</string>
     <string-array name="currency_titles">
         <item>USD</item>
         <item>EUR</item>
@@ -17,7 +19,7 @@
     <string name="bta">BTA </string>
     <string name="ayil">Ayil </string>
     <string name="rsk">RSK </string>
-    <string name="cbk">Kyrgyzstan</string>
+    <string name="cbk">Commercial</string>
     <string name="fkb">Finance Credit</string>
     <string name="dos_credo">Dos Credo </string>
     <string name="progress_title">Please wait</string>
@@ -34,5 +36,4 @@
     <string name="toggle">toggle</string>
     <string name="no_internet">No internet connection. Please, connect to an internet.</string>
     <string name="converter_title">Converter</string>
-    <string name="app_name">Som Converter</string>
 </resources>

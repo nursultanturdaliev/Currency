@@ -5,15 +5,13 @@
     <item
         android:id="@+id/action_update"
         android:title="@string/action_update"
-        android:icon="@drawable/ic_action_refresh"
+        android:icon="@drawable/ic_autorenew_24dp"
         android:orderInCategory="2"
-        app:showAsAction="ifRoom"
-        android:showAsAction="ifRoom" />
+        app:showAsAction="ifRoom"/>
     <item
         android:id="@+id/action_last_updated"
         android:title="@string/last_updated"
-        android:icon="@drawable/ic_action_time"
+        android:icon="@drawable/ic_access_time_24dp"
         android:orderInCategory="1"
-        app:showAsAction="ifRoom"
-        android:showAsAction="ifRoom" />
+        app:showAsAction="ifRoom"/>
 </menu>

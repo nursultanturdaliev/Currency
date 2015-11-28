@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.ContextThemeWrapper;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
@@ -53,7 +52,7 @@ public class CurrencyFragment extends ListFragment {
 
 
             //dialog
-            final Dialog dialog = new Dialog(new ContextThemeWrapper(getActivity(), R.style.AlertDialogStyle));
+            final Dialog dialog = new Dialog(getActivity());
             dialog.setContentView(R.layout.converter_dialog);
             dialog.setTitle(getActivity().getString(R.string.converter_title));
 
@@ -120,16 +119,6 @@ public class CurrencyFragment extends ListFragment {
                 }
             });
             dialog.show();
-
-            int alertTitleId = getResources().getIdentifier("android:id/alertTitle", null, null);
-            TextView alertTitle = (TextView) dialog.findViewById(alertTitleId);
-            if (alertTitle != null)
-                alertTitle.setTextColor(getResources().getColor(R.color.application_color)); // change title text color
-
-            int dividerId = dialog.getContext().getResources().getIdentifier("android:id/titleDivider", null, null);
-            View divider = dialog.findViewById(dividerId);
-            if (divider != null)
-                divider.setBackgroundColor(getActivity().getResources().getColor(R.color.application_color));
 
             edtTxtFrom.post(new Runnable() {
                 public void run() {

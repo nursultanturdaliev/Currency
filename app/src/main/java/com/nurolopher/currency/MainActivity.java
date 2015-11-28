@@ -1,26 +1,32 @@
 package com.nurolopher.currency;
 
-import android.app.ActionBar;
-import android.app.FragmentTransaction;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
+import android.content.res.Resources;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
+import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewConfiguration;
 import android.widget.Toast;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.nurolopher.currency.fragment.CurrencyFragment;
+
 import java.lang.reflect.Field;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Locale;
 
 import adapter.TabsPagerAdapter;
 import helpers.DateHelper;
@@ -29,21 +35,17 @@ import parser.BankURL;
 import parser.Currency;
 import parser.CurrencyParser;
 
-import com.google.android.gms.analytics.GoogleAnalytics;
-import com.google.android.gms.analytics.HitBuilders;
-import com.google.android.gms.analytics.Tracker;
 
-public class MainActivity extends FragmentActivity implements ActionBar.TabListener {
+public class MainActivity extends AppCompatActivity {
 
     private static final String SHARED_PREFS_CURRENCY = "SHARED_PREFS_CURRENCY";
     private static final String currencyPrefTag = "currency_table";
     private static final String datePrefTag = "date_updated";
 
-    public static ViewPager viewPager;
-    public static android.app.ActionBar actionBar;
     public static TabsPagerAdapter tabsPagerAdapter;
 
     public static ProgressDialog progressDialog;
+    public static ViewPager viewPager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,26 +55,15 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 
         getOverflowMenu();
 
+        setupActionBar();
+
         viewPager = (ViewPager) findViewById(R.id.pager);
-        actionBar = getActionBar();
 
-        String[] tabs = getResources().getStringArray(R.array.currency_titles);
-        for (String tabText : tabs) {
-            ActionBar.Tab tab = actionBar.newTab().setText(tabText).setTabListener(this);
-            actionBar.addTab(tab);
-        }
+        setupViewPager(viewPager);
 
-        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
-        actionBar.setHomeButtonEnabled(false);
-        actionBar.setSelectedNavigationItem(0);
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
+        tabLayout.setupWithViewPager(viewPager);
 
-        viewPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
-
-            @Override
-            public void onPageSelected(int position) {
-                actionBar.setSelectedNavigationItem(position);
-            }
-        });
 
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS_CURRENCY, 0);
         String currencyInString = sharedPreferences.getString(currencyPrefTag, "");
@@ -83,10 +74,26 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
         CurrencyParser currencyParser = new CurrencyParser(this);
         currencyParser.execute(BankURL.getArrayURL());
 
-        Tracker t = ((SomConverterApp) getApplication()).getTracker(SomConverterApp.TrackerName.APP_TRACKER);
-        t.setScreenName("Home");
-        t.send(new HitBuilders.AppViewBuilder().build());
+        configAds();
+    }
 
+    private void configAds() {
+        AdView mAdView = (AdView) findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder()
+                .addTestDevice("2BDF6CAE6CD3E181584C6FAC61FCF7F6")
+                .build();
+        mAdView.loadAd(adRequest);
+    }
+
+    private void setupViewPager(ViewPager viewPager) {
+        tabsPagerAdapter = new TabsPagerAdapter(getSupportFragmentManager());
+        Resources resources = getResources();
+        String[] tabs = resources.getStringArray(R.array.currency_titles);
+        tabsPagerAdapter.addFragment(CurrencyFragment.newInstance(Currency.USD), tabs[0]);
+        tabsPagerAdapter.addFragment(CurrencyFragment.newInstance(Currency.USD), tabs[1]);
+        tabsPagerAdapter.addFragment(CurrencyFragment.newInstance(Currency.RUB), tabs[2]);
+        tabsPagerAdapter.addFragment(CurrencyFragment.newInstance(Currency.KZT), tabs[3]);
+        viewPager.setAdapter(tabsPagerAdapter);
     }
 
     @Override
@@ -100,7 +107,6 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
         editor.apply();
 
         super.onStop();
-        GoogleAnalytics.getInstance(MainActivity.this).reportActivityStop(this);
     }
 
 
@@ -135,26 +141,12 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
         return true;
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        GoogleAnalytics.getInstance(MainActivity.this).reportActivityStart(this);
-    }
-
-
-    @Override
-    public void onTabSelected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
-        viewPager.setCurrentItem(tab.getPosition());
-    }
-
-    @Override
-    public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
-
-    }
-
-    @Override
-    public void onTabReselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
-
+    private void setupActionBar() {
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(false);
+            actionBar.setElevation(0.0f);
+        }
     }
 
     private void getOverflowMenu() {
@@ -180,10 +172,6 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
         progressDialog.setCanceledOnTouchOutside(false);
         progressDialog.show();
 
-        int dividerId = progressDialog.getContext().getResources().getIdentifier("android:id/titleDivider", null, null);
-        View divider = progressDialog.findViewById(dividerId);
-        divider.setBackgroundColor(context.getResources().getColor(R.color.application_color));
-
     }
 
     public static void toggleProgressBarMessage(Context context, int value) {
@@ -196,7 +184,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
     }
 
     public static void setUpdateTime(Context context) {
-        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss", Locale.UK);
         Calendar calendar = Calendar.getInstance();
         String dateInString = dateFormat.format(calendar.getTime());
 
@@ -208,6 +196,11 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
     }
 
     public static void showUpdateToast(Context context) {
+        Toast toast = Toast.makeText(context.getApplicationContext(), getMessage(context), Toast.LENGTH_LONG);
+        toast.show();
+    }
+
+    public static String getMessage(Context context) {
         SharedPreferences sharedPreferences = context.getSharedPreferences(SHARED_PREFS_CURRENCY, 0);
         String lastUpdateDateStr = sharedPreferences.getString(datePrefTag, "");
         long[] dateDiff = DateHelper.getDateDiff(lastUpdateDateStr);
@@ -238,11 +231,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
             defaultText = context.getString(R.string.last_updated) + " ";
         }
         toastMessage.insert(0, defaultText);
-        Toast toast = Toast.makeText(context.getApplicationContext(), toastMessage.toString(), Toast.LENGTH_LONG);
-        View view = toast.getView();
-        view.setBackgroundColor(context.getResources().getColor(R.color.application_color));
-        toast.show();
-
+        return toastMessage.toString();
     }
 
     boolean isNetworkConnected() {
