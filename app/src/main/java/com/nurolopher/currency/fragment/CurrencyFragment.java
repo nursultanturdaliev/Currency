@@ -19,7 +19,11 @@ import android.widget.TextView;
 
 import com.nurolopher.currency.R;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import adapter.CurrencyAdapter;
+import model.CurrencyModel;
 import parser.Currency;
 
 
@@ -45,9 +49,14 @@ public class CurrencyFragment extends Fragment implements ListView.OnItemClickLi
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_currency, container, false);
         ListView listView = (ListView) view.findViewById(R.id.listView);
-        CurrencyAdapter currencyAdapter = new CurrencyAdapter(getActivity(), currencyType);
+        List<CurrencyModel> list = new ArrayList<>();
+        if (Currency.hashtable != null) {
+            list = Currency.getHastTable().get(currencyType);
+        }
+        CurrencyAdapter currencyAdapter = new CurrencyAdapter(getActivity(), list);
         listView.setOnItemClickListener(this);
         listView.setAdapter(currencyAdapter);
+
         return view;
     }
 

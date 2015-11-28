@@ -55,7 +55,7 @@
         android:layout_height="wrap_content"
         android:inputType="numberDecimal"
         android:layout_gravity="center_horizontal"
-        android:maxWidth="100dp" />
+        android:minWidth="100dp" />
 
     <TextView
         android:id="@+id/edtTxtTo"
@@ -63,5 +63,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        android:textIsSelectable="true" />
+        android:textIsSelectable="true"
+        android:minWidth="100dp" />
 </LinearLayout>

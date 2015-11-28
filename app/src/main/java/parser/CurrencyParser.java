@@ -12,80 +12,83 @@ import org.jsoup.nodes.Element;
 import org.jsoup.parser.Parser;
 import org.jsoup.select.Elements;
 
+import java.util.Hashtable;
+import java.util.List;
+
+import model.CurrencyModel;
+
 /**
  * Created by nursultan on 6-Feb 15.
  */
-public class CurrencyParser extends AsyncTask<String, Integer, String[][]> {
+public class CurrencyParser extends AsyncTask<String, Integer, Hashtable<String, List<CurrencyModel>>> {
     private MainActivity mainActivity;
     private Document document;
     private Elements rows;
 
     public CurrencyParser(Context context) {
+        Currency.hashtable = new Hashtable<>();
         mainActivity = (MainActivity) context;
     }
 
     @Override
-    protected String[][] doInBackground(String... urls) {
-        if (Currency.currencyTable.length == 0) {
-            Currency.currencyTable = new String[urls.length][4];
-            int actual_index = 0;
-            int count;
-            for (int index = 0; index < urls.length; index++) {
-                count = 0;
-                try {
-                    switch (urls[index]) {
-                        case BankURL.ECO:
-                            count = parseEco(actual_index, count);
-                            break;
-                        case BankURL.NBKR:
-                            count = parseNBKR(actual_index, count);
-                            break;
-                        case BankURL.DEMIR:
-                            count = parseDEMIR(actual_index, count);
-                            break;
-                        case BankURL.OPTIMA:
-                            count = parseOPTIMA(actual_index, count);
-                            break;
-                        case BankURL.ROSIN:
-                            count = parseROSIN(actual_index, count);
-                            break;
-                        case BankURL.KICB:
-                            count = parseKICB(actual_index, count);
-                            break;
-                        case BankURL.BTA:
-                            count = parseBTA(actual_index, count);
-                            break;
-                        case BankURL.AYIL:
-                            count = parseAYIL(actual_index, count);
-                            break;
-                        case BankURL.RSK:
-                            count = parseRSK(actual_index, count);
-                            break;
-                        case BankURL.CBK:
-                            count = parseCBK(actual_index, count);
-                            break;
-                        case BankURL.FKB:
-                            count = parseFKB(actual_index, count);
-                            break;
-                        case BankURL.DOS_CREDO:
-                            count = parseDOS(actual_index, count);
-                        default:
-                            break;
-                    }
-                } catch (Exception ignored) {
-
-                }
-                actual_index += count;
-                publishProgress(index);
-            }
-
-            Currency.normalizeCurrencyTable();
-            return Currency.currencyTable;
-        } else {
-            Currency.normalizeCurrencyTable();
-            return Currency.currencyTable;
+    protected Hashtable<String, List<CurrencyModel>> doInBackground(String... urls) {
+        if (Currency.hashtable != null && Currency.hashtable.size() > 0){
+            mainActivity.updated = false;
+            return Currency.hashtable;
         }
+        Currency.currencyTable = new String[urls.length][4];
+        int actual_index = 0;
+        int count;
+        for (int index = 0; index < urls.length; index++) {
+            count = 0;
+            try {
+                switch (urls[index]) {
+                    case BankURL.ECO:
+                        count = parseEco(actual_index, count);
+                        break;
+                    case BankURL.NBKR:
+                        count = parseNBKR(actual_index, count);
+                        break;
+                    case BankURL.DEMIR:
+                        count = parseDEMIR(actual_index, count);
+                        break;
+                    case BankURL.OPTIMA:
+                        count = parseOPTIMA(actual_index, count);
+                        break;
+                    case BankURL.ROSIN:
+                        count = parseROSIN(actual_index, count);
+                        break;
+                    case BankURL.KICB:
+                        count = parseKICB(actual_index, count);
+                        break;
+                    case BankURL.BTA:
+                        count = parseBTA(actual_index, count);
+                        break;
+                    case BankURL.AYIL:
+                        count = parseAYIL(actual_index, count);
+                        break;
+                    case BankURL.RSK:
+                        count = parseRSK(actual_index, count);
+                        break;
+                    case BankURL.CBK:
+                        count = parseCBK(actual_index, count);
+                        break;
+                    case BankURL.FKB:
+                        count = parseFKB(actual_index, count);
+                        break;
+                    case BankURL.DOS_CREDO:
+                        count = parseDOS(actual_index, count);
+                    default:
+                        break;
+                }
+            } catch (Exception ignored) {
 
+            }
+            actual_index += count;
+            publishProgress(index);
+        }
+        mainActivity.updated = true;
+        return Currency.getHastTable();
     }
 
 
@@ -96,13 +99,14 @@ public class CurrencyParser extends AsyncTask<String, Integer, String[][]> {
     }
 
     @Override
-    protected void onPostExecute(String[][] currencies) {
+    protected void onPostExecute(Hashtable<String, List<CurrencyModel>> currencies) {
         super.onPostExecute(currencies);
 
-        Currency.currencyTable = currencies;
+        Currency.hashtable = currencies;
         mainActivity.progressDialog.cancel();
-
-        mainActivity.showUpdateMessage();
+        mainActivity.tabsPagerAdapter.notifyDataSetChanged();
+        if (mainActivity.updated)
+            mainActivity.showUpdateMessage();
     }
 
     @Override

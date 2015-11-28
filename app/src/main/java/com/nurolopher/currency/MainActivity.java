@@ -33,12 +33,12 @@ public class MainActivity extends AppCompatActivity {
 
     private static final String SHARED_PREFS_CURRENCY = "SHARED_PREFS_CURRENCY";
     private static final String currencyPrefTag = "currency_table";
-    private static final String datePrefTag = "date_updated";
 
-    public static TabsPagerAdapter tabsPagerAdapter;
+    public TabsPagerAdapter tabsPagerAdapter;
 
     public ProgressDialog progressDialog;
     public static ViewPager viewPager;
+    public boolean updated;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -116,7 +116,6 @@ public class MainActivity extends AppCompatActivity {
         switch (id) {
             case R.id.action_update:
                 if (isNetworkConnected()) {
-                    Currency.currencyTable = new String[][]{};
                     populateCurrency();
                 } else {
                     showNoInternetMessage();

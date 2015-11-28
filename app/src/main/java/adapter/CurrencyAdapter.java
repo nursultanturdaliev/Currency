@@ -10,7 +10,9 @@ import android.widget.ArrayAdapter;
 import com.nurolopher.currency.CompleteListViewHolder;
 import com.nurolopher.currency.R;
 
-import parser.Currency;
+import java.util.List;
+
+import model.CurrencyModel;
 
 
 /**
@@ -18,12 +20,12 @@ import parser.Currency;
  */
 public class CurrencyAdapter extends ArrayAdapter {
 
-    private final String currencyType;
     private final Context context;
+    private List<CurrencyModel> mCurrencyModels;
 
-    public CurrencyAdapter(Context context, String currencyType) {
-        super(context, R.layout.row, Currency.currencyTable);
-        this.currencyType = currencyType;
+    public CurrencyAdapter(Context context, List<CurrencyModel> mCurrencyModels) {
+        super(context, R.layout.row, mCurrencyModels);
+        this.mCurrencyModels = mCurrencyModels;
         this.context = context;
     }
 
@@ -39,18 +41,13 @@ public class CurrencyAdapter extends ArrayAdapter {
 
             // well set up the ViewHolder
             viewHolder = new CompleteListViewHolder(convertView);
-
-            for (int index = 0; index < Currency.currencyTable[position].length; index++) {
-                if (Currency.currencyTable[position][index] == null) {
-                    continue;
-                }
-                String[] str = Currency.currencyTable[position][index].split(";");
-                if (str[1].equals(currencyType)) {
-                    viewHolder.title.setText(str[0]);
-                    viewHolder.buy.setText(str[2]);
-                    viewHolder.sell.setText(str[3]);
-                }
+            CurrencyModel currencyModel = mCurrencyModels.get(position);
+            if (currencyModel == null) {
+                return convertView;
             }
+            viewHolder.title.setText(currencyModel.getName());
+            viewHolder.buy.setText(currencyModel.getBuy());
+            viewHolder.sell.setText(currencyModel.getSell());
             convertView.setTag(viewHolder);
         }
 
