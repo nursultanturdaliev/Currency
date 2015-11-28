@@ -1,6 +1,7 @@
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:ads="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/rootView"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -13,29 +14,30 @@
             android:id="@+id/tabs"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:tabMode="fixed"
-            app:tabGravity="fill"/>
+            app:tabGravity="fill"
+            app:tabMode="fixed" />
     </android.support.design.widget.AppBarLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_marginTop="50dp"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_marginTop="50dp">
+
         <android.support.v4.view.ViewPager
             android:id="@+id/pager"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
-            android:layout_above="@+id/adView" />
+            android:layout_alignParentLeft="false"
+            android:layout_alignParentStart="false" />
         <com.google.android.gms.ads.AdView
             android:id="@+id/adView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
             android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
             ads:adSize="LARGE_BANNER"
-            ads:adUnitId="@string/banner_ad_unit_id">
-        </com.google.android.gms.ads.AdView>
+            ads:adUnitId="@string/banner_ad_unit_id" />
     </RelativeLayout>
 
 </android.support.design.widget.CoordinatorLayout>

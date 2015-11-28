@@ -3,14 +3,15 @@
     android:id="@+id/gridLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:minWidth="300dp"
     android:orientation="vertical"
     android:padding="10dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:weightSum="6"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:weightSum="6">
 
         <TextView
             android:id="@+id/txtCurrencyLeft"
@@ -22,13 +23,19 @@
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:textStyle="bold" />
 
-        <ImageButton
-            android:id="@+id/imgBtnToggle"
+        <LinearLayout
             android:layout_width="0dp"
+            android:layout_height="wrap_content"
             android:layout_weight="2"
-            android:layout_height="match_parent"
-            android:background="@drawable/ic_dialog_switch"
-            android:contentDescription="@string/toggle" />
+            android:gravity="center_vertical|center_horizontal">
+
+            <ImageButton
+                android:id="@+id/imgBtnToggle"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:background="@drawable/ic_dialog_switch"
+                android:contentDescription="@string/toggle" />
+        </LinearLayout>
 
         <TextView
             android:id="@+id/txtCurrencyRight"
@@ -44,13 +51,15 @@
 
     <EditText
         android:id="@+id/edtTxtFrom"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:inputType="numberDecimal" />
+        android:inputType="numberDecimal"
+        android:layout_gravity="center_horizontal"
+        android:maxWidth="100dp" />
 
     <TextView
         android:id="@+id/edtTxtTo"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"

@@ -3,11 +3,15 @@ package com.nurolopher.currency.fragment;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
-import android.support.v4.app.ListFragment;
+import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
@@ -19,7 +23,7 @@ import adapter.CurrencyAdapter;
 import parser.Currency;
 
 
-public class CurrencyFragment extends ListFragment {
+public class CurrencyFragment extends Fragment implements ListView.OnItemClickListener {
 
 
     private static final String ARG_CURRENCY_TYPE = "currency_type";
@@ -36,12 +40,53 @@ public class CurrencyFragment extends ListFragment {
         return fragment;
     }
 
+    @Nullable
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_currency, container, false);
+        ListView listView = (ListView) view.findViewById(R.id.listView);
+        CurrencyAdapter currencyAdapter = new CurrencyAdapter(getActivity(), currencyType);
+        listView.setOnItemClickListener(this);
+        listView.setAdapter(currencyAdapter);
+        return view;
+    }
+
     public CurrencyFragment() {
     }
 
+    private void imageCurrencyToggle(final double buy, final double sell, Dialog dialog, final TextView txtCurrencyLeft, final TextView txtCurrencyRight, final EditText edtTxtFrom, final TextView edtTxtTo) {
+        ImageButton imgBtnToggle = (ImageButton) dialog.findViewById(R.id.imgBtnToggle);
+        imgBtnToggle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CharSequence tmpText = txtCurrencyLeft.getText();
+                txtCurrencyLeft.setText(txtCurrencyRight.getText());
+                txtCurrencyRight.setText(tmpText);
+                if (edtTxtFrom.getText().length() > 0) {
+                    if (txtCurrencyLeft.getText().toString().equals(Currency.SOM)) {
+                        double result = Double.parseDouble(edtTxtFrom.getText().toString()) / sell;
+                        edtTxtTo.setText(String.format("%.2f", result));
+                    } else {
+                        double result = Double.parseDouble(edtTxtFrom.getText().toString()) * buy;
+                        edtTxtTo.setText(String.format("%.2f", result));
+                    }
+                } else {
+                    edtTxtTo.setText("");
+                }
+            }
+        });
+    }
+
     @Override
-    public void onListItemClick(ListView l, View v, int position, long id) {
-        super.onListItemClick(l, v, position, id);
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if (getArguments() != null) {
+            currencyType = getArguments().getString(ARG_CURRENCY_TYPE);
+        }
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         int columnIndex = Currency.getCurrencyCell(position, currencyType);
         if (columnIndex > -1) {
             String[] bankParams = Currency.currencyTable[position][columnIndex].split(";");
@@ -98,26 +143,7 @@ public class CurrencyFragment extends ListFragment {
 
 
             // Image currency toggle
-            ImageButton imgBtnToggle = (ImageButton) dialog.findViewById(R.id.imgBtnToggle);
-            imgBtnToggle.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    CharSequence tmpText = txtCurrencyLeft.getText();
-                    txtCurrencyLeft.setText(txtCurrencyRight.getText());
-                    txtCurrencyRight.setText(tmpText);
-                    if (edtTxtFrom.getText().length() > 0) {
-                        if (txtCurrencyLeft.getText().toString().equals(Currency.SOM)) {
-                            double result = Double.parseDouble(edtTxtFrom.getText().toString()) / sell;
-                            edtTxtTo.setText(String.format("%.2f", result));
-                        } else {
-                            double result = Double.parseDouble(edtTxtFrom.getText().toString()) * buy;
-                            edtTxtTo.setText(String.format("%.2f", result));
-                        }
-                    } else {
-                        edtTxtTo.setText("");
-                    }
-                }
-            });
+            imageCurrencyToggle(buy, sell, dialog, txtCurrencyLeft, txtCurrencyRight, edtTxtFrom, edtTxtTo);
             dialog.show();
 
             edtTxtFrom.post(new Runnable() {
@@ -128,15 +154,5 @@ public class CurrencyFragment extends ListFragment {
                 }
             });
         }
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            currencyType = getArguments().getString(ARG_CURRENCY_TYPE);
-        }
-        CurrencyAdapter currencyAdapter = new CurrencyAdapter(getActivity(), currencyType);
-        setListAdapter(currencyAdapter);
     }
 }
